@@ -58,107 +58,101 @@ export function MapVisualization() {
             </div>
             
             <div className="relative bg-ocean-50 rounded-xl overflow-hidden" style={{ height: '400px' }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-200 to-blue-300">
-                <svg viewBox="0 0 800 400" className="w-full h-full">
-                  {/* Water bodies - Johor Strait and surrounding waters */}
-                  <rect x="0" y="0" width="800" height="400" fill="#3b82f6" />
-                  
-                  {/* Singapore island */}
-                  <path 
-                    d="M280 280 L380 270 L390 290 L385 310 L375 320 L350 325 L320 320 L295 310 L280 295 Z" 
-                    fill="#10b981" 
-                    stroke="#065f46" 
-                    strokeWidth="2"
+              {viewMode === 'map' ? (
+                <div className="w-full h-full">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d127646.5!2d103.7!3d1.4!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x31da19a8df1c3f31%3A0x3baa355cd9b9a299!2sOrchard%20Road%2C%20Singapore!3m2!1d1.3048035!2d103.8318358!4m5!1s0x31da0e1c4f3d4f3d%3A0x1c4f3d4f3d4f3d4f!2sForest%20City%2C%20Johor%2C%20Malaysia!3m2!1d1.3268!2d103.6319!5e0!3m2!1sen!2s!4v1642071234567!5m2!1sen!2s"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="rounded-xl"
                   />
-                  
-                  {/* Johor (Malaysia mainland) */}
-                  <path 
-                    d="M200 200 L600 180 L650 200 L680 220 L700 240 L720 260 L650 280 L600 290 L550 295 L450 300 L400 290 L350 280 L300 270 L250 260 L200 240 Z" 
-                    fill="#16a34a" 
-                    stroke="#15803d" 
-                    strokeWidth="2"
-                  />
-                  
-                  {/* Forest City development area */}
-                  <path 
-                    d="M520 260 L580 255 L590 270 L585 285 L570 290 L540 285 L525 275 Z" 
-                    fill="#22c55e" 
-                    stroke="#16a34a" 
-                    strokeWidth="2"
-                  />
-                  
-                  {/* Johor Strait */}
-                  <path 
-                    d="M280 280 L520 260" 
-                    stroke="#1e40af" 
-                    strokeWidth="8" 
-                    fill="none" 
-                    opacity="0.7"
-                  />
-                  
-                  {/* Causeway bridge */}
-                  <line 
-                    x1="320" y1="275" 
-                    x2="340" y2="272" 
-                    stroke="#6b7280" 
-                    strokeWidth="4"
-                  />
-                  
-                  {/* Second Link bridge */}
-                  <line 
-                    x1="360" y1="290" 
-                    x2="380" y2="285" 
-                    stroke="#6b7280" 
-                    strokeWidth="4"
-                  />
-                  
-                  {/* Route line */}
-                  <path 
-                    d="M330 290 Q420 280 550 270" 
-                    stroke="#dc2626" 
-                    strokeWidth="4" 
-                    fill="none" 
-                    strokeDasharray="8,4"
-                    className="animate-pulse"
-                  />
-                  
-                  {/* Start point - Orchard Road area */}
-                  <circle cx="330" cy="290" r="6" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
-                  <text x="330" y="305" textAnchor="middle" fill="#1f2937" fontSize="11" fontWeight="bold">Orchard Road</text>
-                  
-                  {/* End point - Forest City */}
-                  <circle cx="550" cy="270" r="6" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
-                  <text x="550" y="255" textAnchor="middle" fill="#1f2937" fontSize="11" fontWeight="bold">Forest City</text>
-                  
-                  {/* Geographic labels */}
-                  <text x="340" y="250" textAnchor="middle" fill="#1f2937" fontSize="10" fontWeight="bold">Singapore</text>
-                  <text x="450" y="230" textAnchor="middle" fill="#1f2937" fontSize="10" fontWeight="bold">Johor, Malaysia</text>
-                  <text x="400" y="320" textAnchor="middle" fill="#1e40af" fontSize="9">Johor Strait</text>
-                  
-                  {/* Additional landmarks */}
-                  <circle cx="325" cy="285" r="2" fill="#6b7280" />
-                  <text x="325" y="300" textAnchor="middle" fill="#6b7280" fontSize="8">Woodlands</text>
-                  
-                  <circle cx="375" cy="282" r="2" fill="#6b7280" />
-                  <text x="375" y="297" textAnchor="middle" fill="#6b7280" fontSize="8">Johor Bahru</text>
-                  
-                  {/* Distance indicator */}
-                  <g transform="translate(600, 350)">
-                    <line x1="0" y1="0" x2="40" y2="0" stroke="#374151" strokeWidth="2" />
-                    <line x1="0" y1="-3" x2="0" y2="3" stroke="#374151" strokeWidth="2" />
-                    <line x1="40" y1="-3" x2="40" y2="3" stroke="#374151" strokeWidth="2" />
-                    <text x="20" y="15" textAnchor="middle" fill="#374151" fontSize="9">~30 km</text>
-                  </g>
-                  
-                  {/* Animated runner */}
-                  <g transform={`translate(${330 + (220 * runnerPosition / 100)}, ${290 + (-20 * runnerPosition / 100)})`}>
-                    <circle r="3" fill="#f59e0b" />
-                    <g stroke="#f59e0b" strokeWidth="1.5" fill="none">
-                      <path d="M0 4 L3 10 M0 4 L-3 10 M0 7 L6 7" />
+                  <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+                    <div className="text-sm font-medium text-gray-800">
+                      🚶‍♂️ Walking Route
+                    </div>
+                    <div className="text-xs text-gray-600 mt-1">
+                      Orchard Road → Forest City
+                    </div>
+                    <div className="text-xs text-blue-600 mt-1">
+                      Click map for detailed directions
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-200 to-blue-300">
+                  <svg viewBox="0 0 800 400" className="w-full h-full">
+                    {/* Water bodies - Johor Strait and surrounding waters */}
+                    <rect x="0" y="0" width="800" height="400" fill="#3b82f6" />
+                    
+                    {/* Singapore island */}
+                    <path 
+                      d="M280 280 L380 270 L390 290 L385 310 L375 320 L350 325 L320 320 L295 310 L280 295 Z" 
+                      fill="#10b981" 
+                      stroke="#065f46" 
+                      strokeWidth="2"
+                    />
+                    
+                    {/* Johor (Malaysia mainland) */}
+                    <path 
+                      d="M200 200 L600 180 L650 200 L680 220 L700 240 L720 260 L650 280 L600 290 L550 295 L450 300 L400 290 L350 280 L300 270 L250 260 L200 240 Z" 
+                      fill="#16a34a" 
+                      stroke="#15803d" 
+                      strokeWidth="2"
+                    />
+                    
+                    {/* Forest City development area */}
+                    <path 
+                      d="M520 260 L580 255 L590 270 L585 285 L570 290 L540 285 L525 275 Z" 
+                      fill="#22c55e" 
+                      stroke="#16a34a" 
+                      strokeWidth="2"
+                    />
+                    
+                    {/* Johor Strait */}
+                    <path 
+                      d="M280 280 L520 260" 
+                      stroke="#1e40af" 
+                      strokeWidth="8" 
+                      fill="none" 
+                      opacity="0.7"
+                    />
+                    
+                    {/* Route line */}
+                    <path 
+                      d="M330 290 Q420 280 550 270" 
+                      stroke="#dc2626" 
+                      strokeWidth="4" 
+                      fill="none" 
+                      strokeDasharray="8,4"
+                      className="animate-pulse"
+                    />
+                    
+                    {/* Start point - Orchard Road area */}
+                    <circle cx="330" cy="290" r="6" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
+                    <text x="330" y="305" textAnchor="middle" fill="#1f2937" fontSize="11" fontWeight="bold">Orchard Road</text>
+                    
+                    {/* End point - Forest City */}
+                    <circle cx="550" cy="270" r="6" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
+                    <text x="550" y="255" textAnchor="middle" fill="#1f2937" fontSize="11" fontWeight="bold">Forest City</text>
+                    
+                    {/* Geographic labels */}
+                    <text x="340" y="250" textAnchor="middle" fill="#1f2937" fontSize="10" fontWeight="bold">Singapore</text>
+                    <text x="450" y="230" textAnchor="middle" fill="#1f2937" fontSize="10" fontWeight="bold">Johor, Malaysia</text>
+                    
+                    {/* Animated runner */}
+                    <g transform={`translate(${330 + (220 * runnerPosition / 100)}, ${290 + (-20 * runnerPosition / 100)})`}>
+                      <circle r="3" fill="#f59e0b" />
+                      <g stroke="#f59e0b" strokeWidth="1.5" fill="none">
+                        <path d="M0 4 L3 10 M0 4 L-3 10 M0 7 L6 7" />
+                      </g>
                     </g>
-                  </g>
-                </svg>
-              </div>
+                  </svg>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -191,10 +185,10 @@ export function MapVisualization() {
                   </div>
                   <div className="text-right">
                     <p className={cn("font-semibold", selectedSpeed === index ? "text-white" : "text-ocean-800")}>
-                      {speed.days} days
+                      {speed.days} min
                     </p>
                     <p className={cn("text-sm", selectedSpeed === index ? "opacity-90" : "text-ocean-600")}>
-                      {speed.hours.toLocaleString()} hours
+                      {speed.hours} hours
                     </p>
                   </div>
                 </div>
@@ -225,7 +219,7 @@ export function MapVisualization() {
                   />
                 </div>
                 <p className="text-sm text-ocean-600 mt-2">
-                  {runnerPosition}% Complete • {Math.round(routeData.distance * runnerPosition / 100).toLocaleString()} miles
+                  {runnerPosition}% Complete • {Math.round(routeData.distance * runnerPosition / 100)} miles
                 </p>
               </div>
             </div>

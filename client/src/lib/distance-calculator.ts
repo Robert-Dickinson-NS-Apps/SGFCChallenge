@@ -28,11 +28,15 @@ export function calculateRunningTimes(distance: number): Speed[] {
     { name: 'Fast Run', mph: 12 }
   ];
 
-  return speeds.map(speed => ({
-    ...speed,
-    hours: Math.round(distance / speed.mph),
-    days: Math.round(distance / (speed.mph * 24))
-  }));
+  return speeds.map(speed => {
+    const totalMinutes = Math.round((distance / speed.mph) * 60);
+    return {
+      ...speed,
+      hours: Math.round(totalMinutes / 60),
+      days: totalMinutes, // Store minutes in the days field for display
+      minutes: totalMinutes
+    };
+  });
 }
 
 // Get route data for Orchard Road Singapore to Forest City, Malaysia
@@ -40,7 +44,8 @@ export function getRouteData(): Route {
   const start: Location = { lat: 1.3041, lng: 103.8315, name: 'Orchard Road, Singapore' };
   const end: Location = { lat: 1.4259, lng: 103.7641, name: 'Forest City, Malaysia' };
   
-  const distance = calculateDistance(start, end);
+  // Use actual road distance (approximately 25 miles / 40 km by road)
+  const distance = 25; // miles - actual road distance
   const distanceKm = milesToKm(distance);
 
   return {

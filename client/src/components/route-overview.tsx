@@ -35,7 +35,7 @@ export function RouteOverview() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-ocean-600 text-sm font-medium">Estimated Time</p>
-                <p className="text-2xl font-bold text-ocean-800">{averageSpeed?.days} days</p>
+                <p className="text-2xl font-bold text-ocean-800">{averageSpeed?.days} min</p>
                 <p className="text-ocean-500 text-sm">@ {averageSpeed?.mph} mph average</p>
               </div>
               <div className="bg-green-100 p-3 rounded-lg">

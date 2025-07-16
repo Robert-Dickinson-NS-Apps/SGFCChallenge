@@ -21,6 +21,7 @@ export const speedSchema = z.object({
   mph: z.number(),
   days: z.number(),
   hours: z.number(),
+  minutes: z.number().optional(),
 });
 
 export type Location = z.infer<typeof locationSchema>;
