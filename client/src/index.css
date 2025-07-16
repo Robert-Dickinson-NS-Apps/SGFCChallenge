@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Ocean theme colors */
+  --ocean-50: hsl(198, 100%, 97%);
+  --ocean-100: hsl(198, 100%, 92%);
+  --ocean-200: hsl(198, 84%, 82%);
+  --ocean-300: hsl(199, 91%, 73%);
+  --ocean-400: hsl(200, 98%, 64%);
+  --ocean-500: hsl(200, 96%, 39%);
+  --ocean-600: hsl(201, 96%, 32%);
+  --ocean-700: hsl(217, 91%, 6%);
+  --ocean-800: hsl(217, 85%, 11%);
+  --ocean-900: hsl(217, 91%, 6%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-ocean-50 { color: var(--ocean-50); }
+  .text-ocean-100 { color: var(--ocean-100); }
+  .text-ocean-200 { color: var(--ocean-200); }
+  .text-ocean-300 { color: var(--ocean-300); }
+  .text-ocean-400 { color: var(--ocean-400); }
+  .text-ocean-500 { color: var(--ocean-500); }
+  .text-ocean-600 { color: var(--ocean-600); }
+  .text-ocean-700 { color: var(--ocean-700); }
+  .text-ocean-800 { color: var(--ocean-800); }
+  .text-ocean-900 { color: var(--ocean-900); }
+  
+  .bg-ocean-50 { background-color: var(--ocean-50); }
+  .bg-ocean-100 { background-color: var(--ocean-100); }
+  .bg-ocean-200 { background-color: var(--ocean-200); }
+  .bg-ocean-300 { background-color: var(--ocean-300); }
+  .bg-ocean-400 { background-color: var(--ocean-400); }
+  .bg-ocean-500 { background-color: var(--ocean-500); }
+  .bg-ocean-600 { background-color: var(--ocean-600); }
+  .bg-ocean-700 { background-color: var(--ocean-700); }
+  .bg-ocean-800 { background-color: var(--ocean-800); }
+  .bg-ocean-900 { background-color: var(--ocean-900); }
+  
+  .border-ocean-50 { border-color: var(--ocean-50); }
+  .border-ocean-100 { border-color: var(--ocean-100); }
+  .border-ocean-200 { border-color: var(--ocean-200); }
+  .border-ocean-300 { border-color: var(--ocean-300); }
+  .border-ocean-400 { border-color: var(--ocean-400); }
+  .border-ocean-500 { border-color: var(--ocean-500); }
+  .border-ocean-600 { border-color: var(--ocean-600); }
+  .border-ocean-700 { border-color: var(--ocean-700); }
+  .border-ocean-800 { border-color: var(--ocean-800); }
+  .border-ocean-900 { border-color: var(--ocean-900); }
+  
+  .hover\:bg-ocean-50:hover { background-color: var(--ocean-50); }
+  .hover\:bg-ocean-100:hover { background-color: var(--ocean-100); }
+  .hover\:bg-ocean-200:hover { background-color: var(--ocean-200); }
+  .hover\:bg-ocean-300:hover { background-color: var(--ocean-300); }
+  .hover\:bg-ocean-400:hover { background-color: var(--ocean-400); }
+  .hover\:bg-ocean-500:hover { background-color: var(--ocean-500); }
+  .hover\:bg-ocean-600:hover { background-color: var(--ocean-600); }
+  .hover\:bg-ocean-700:hover { background-color: var(--ocean-700); }
+  .hover\:bg-ocean-800:hover { background-color: var(--ocean-800); }
+  .hover\:bg-ocean-900:hover { background-color: var(--ocean-900); }
+}
