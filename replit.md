@@ -2,7 +2,7 @@
 
 ## Overview
 
-Ocean Runner is a web application that calculates hypothetical running times from San Francisco to Forest City, Malaysia across the Pacific Ocean. The app provides an interactive visualization of the route with fun facts, distance calculations, and estimated completion times for different running speeds.
+Ocean Runner is a web application that calculates running times from Orchard Road, Singapore to Forest City, Malaysia. The app provides an interactive visualization of the route with fun facts, distance calculations, and estimated completion times for different running speeds.
 
 ## User Preferences
 

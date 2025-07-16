@@ -5,7 +5,7 @@ export function Header() {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'Ocean Runner - SF to Forest City Malaysia',
+        title: 'Ocean Runner - Orchard Road Singapore to Forest City Malaysia',
         text: 'Check out this epic ocean run challenge!',
         url: window.location.href
       });
@@ -29,7 +29,7 @@ export function Header() {
             <h1 className="text-2xl font-bold text-ocean-800">Ocean Runner</h1>
           </div>
           <div className="hidden md:flex items-center space-x-6">
-            <span className="text-ocean-600 text-sm">San Francisco to Forest City, Malaysia</span>
+            <span className="text-ocean-600 text-sm">Orchard Road, Singapore to Forest City, Malaysia</span>
             <Button 
               onClick={handleShare}
               className="bg-ocean-500 text-white hover:bg-ocean-600"

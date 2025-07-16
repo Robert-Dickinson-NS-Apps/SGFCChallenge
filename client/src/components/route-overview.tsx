@@ -10,8 +10,8 @@ export function RouteOverview() {
   return (
     <div className="mb-8">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-ocean-800 mb-2">Epic Ocean Run Challenge</h2>
-        <p className="text-ocean-600 text-lg">Calculate your hypothetical running time across the Pacific Ocean</p>
+        <h2 className="text-3xl font-bold text-ocean-800 mb-2">Singapore to Malaysia Run Challenge</h2>
+        <p className="text-ocean-600 text-lg">Calculate your running time from Singapore to Forest City, Malaysia</p>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -49,9 +49,9 @@ export function RouteOverview() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-ocean-600 text-sm font-medium">Ocean Surface</p>
-                <p className="text-2xl font-bold text-ocean-800">100% Water</p>
-                <p className="text-ocean-500 text-sm">Hypothetical run</p>
+                <p className="text-ocean-600 text-sm font-medium">Route Type</p>
+                <p className="text-2xl font-bold text-ocean-800">Short Distance</p>
+                <p className="text-ocean-500 text-sm">Cross-border run</p>
               </div>
               <div className="bg-blue-100 p-3 rounded-lg">
                 <Waves className="text-blue-500 w-6 h-6" />

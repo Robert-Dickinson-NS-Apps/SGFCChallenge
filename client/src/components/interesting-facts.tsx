@@ -5,20 +5,20 @@ export function InterestingFacts() {
   const facts = [
     {
       icon: Globe,
-      title: "Crosses Pacific Ocean",
-      description: "Your route spans the world's largest ocean, covering approximately 165 million square kilometers",
+      title: "Cross-Border Run",
+      description: "Your route connects two neighboring countries, Singapore and Malaysia, across the Johor Strait",
       color: "bg-ocean-500"
     },
     {
       icon: Clock,
-      title: "Time Zones",
-      description: "You'd cross 16 time zones during your epic ocean run adventure",
+      title: "Same Time Zone",
+      description: "Both Singapore and Malaysia are in the same time zone (UTC+8), making timing simple",
       color: "bg-green-500"
     },
     {
       icon: Thermometer,
-      title: "Temperature Range",
-      description: "Ocean temperatures would vary from 10°C to 30°C along your route",
+      title: "Tropical Climate",
+      description: "Expect warm temperatures around 27-32°C year-round in this equatorial region",
       color: "bg-blue-500"
     }
   ];

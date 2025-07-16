@@ -3,16 +3,16 @@ import { Card, CardContent } from "@/components/ui/card";
 export function GlobeView() {
   const globeFacts = [
     {
-      title: "Great Circle Route",
-      description: "The shortest distance between two points on Earth's surface follows a great circle path"
+      title: "Short Distance Route",
+      description: "The direct distance between Singapore and Forest City is much shorter than cross-ocean routes"
     },
     {
-      title: "Curvature Effect",
-      description: "Earth's curvature makes the actual path curve north through the Pacific"
+      title: "Strait Crossing",
+      description: "The route crosses the Johor Strait, which separates Singapore from mainland Malaysia"
     },
     {
-      title: "Fun Calculation",
-      description: "This hypothetical run would burn approximately 1.2 million calories!"
+      title: "Calorie Burn",
+      description: "This run would burn approximately 500-1000 calories depending on your pace!"
     }
   ];
 

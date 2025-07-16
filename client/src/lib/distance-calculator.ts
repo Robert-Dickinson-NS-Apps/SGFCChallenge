@@ -35,9 +35,9 @@ export function calculateRunningTimes(distance: number): Speed[] {
   }));
 }
 
-// Get route data for SF to Forest City, Malaysia
+// Get route data for Orchard Road Singapore to Forest City, Malaysia
 export function getRouteData(): Route {
-  const start: Location = { lat: 37.7749, lng: -122.4194, name: 'San Francisco' };
+  const start: Location = { lat: 1.3041, lng: 103.8315, name: 'Orchard Road, Singapore' };
   const end: Location = { lat: 1.4259, lng: 103.7641, name: 'Forest City, Malaysia' };
   
   const distance = calculateDistance(start, end);

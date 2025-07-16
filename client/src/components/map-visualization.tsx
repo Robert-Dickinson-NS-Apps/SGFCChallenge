@@ -79,7 +79,7 @@ export function MapVisualization() {
                   
                   {/* Start point */}
                   <circle cx="150" cy="160" r="8" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
-                  <text x="150" y="145" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">SF</text>
+                  <text x="150" y="145" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">Singapore</text>
                   
                   {/* End point */}
                   <circle cx="680" cy="180" r="8" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
