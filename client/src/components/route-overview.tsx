@@ -16,8 +16,8 @@ export function RouteOverview({ selectedRoute, onRouteChange }: RouteOverviewPro
   return (
     <div className="mb-8">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Singapore to Forest City Marina Hotel</h2>
-        <p className="text-gray-600 text-lg">Compare routes and estimate your Grab car fare</p>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Drive Routes: Singapore to Forest City</h2>
+        <p className="text-gray-600 text-lg">Estimate your trip time and Grab fare to Forest City Marina Hotel</p>
       </div>
       
       {/* Route Selector */}

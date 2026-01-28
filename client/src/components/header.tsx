@@ -24,7 +24,7 @@ export function Header() {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-800">SG to Forest City</h1>
-              <p className="text-sm text-gray-500">Grab Car Route Planner</p>
+              <p className="text-sm text-gray-500">Drive Route & Trip Time Estimator</p>
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-6">
