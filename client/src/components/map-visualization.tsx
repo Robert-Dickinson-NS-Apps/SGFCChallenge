@@ -28,10 +28,24 @@ export function MapVisualization({ selectedRoute, onRouteChange, startPoint, des
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
       <div className="lg:col-span-2">
-        <Card className="border-gray-200">
+        <Card className="border-blue-200 bg-gradient-to-r from-blue-50 to-white">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">Route Map</h3>
+              <div className="flex items-center">
+                <h3 className="text-lg font-semibold text-gray-800">Interactive Route Map</h3>
+                <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
+                  Click to explore
+                </span>
+              </div>
+              <a 
+                href={getDirectionsUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center text-sm bg-blue-600 text-white hover:bg-blue-700 px-3 py-1 rounded-full font-medium"
+              >
+                <ExternalLink className="w-4 h-4 mr-1" />
+                Navigate Now
+              </a>
             </div>
             
             <div className="relative bg-gray-50 rounded-xl overflow-hidden" style={{ height: '400px' }}>
@@ -46,23 +60,14 @@ export function MapVisualization({ selectedRoute, onRouteChange, startPoint, des
                   referrerPolicy="no-referrer-when-downgrade"
                   className="rounded-xl"
                 />
-                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-gray-200">
                   <div className="text-sm font-medium text-gray-800 flex items-center">
                     <Navigation className="w-4 h-4 mr-2 text-red-600" />
-                    Driving Route
-                  </div>
-                  <div className="text-xs text-gray-600 mt-1">
                     {ROUTES[selectedRoute].name}
                   </div>
-                  <a 
-                    href={getDirectionsUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-xs text-red-600 mt-2 hover:text-red-700 font-medium"
-                  >
-                    <ExternalLink className="w-3 h-3 mr-1" />
-                    Open in Google Maps
-                  </a>
+                  <div className="text-xs text-gray-600 mt-1">
+                    From: {start.name} → To: {dest.name}
+                  </div>
                 </div>
               </div>
             </div>

@@ -96,17 +96,22 @@ export function LiveRouteData({ selectedRoute, startPoint, destination, customSt
   }
 
   return (
-    <Card className="border-gray-200 mb-6">
+    <Card className="border-green-200 mb-6 bg-gradient-to-r from-green-50 to-white">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800 flex items-center">
-            <Zap className="w-5 h-5 mr-2 text-yellow-500" />
-            Live Route Data
-          </h3>
+          <div className="flex items-center">
+            <h3 className="text-lg font-semibold text-gray-800 flex items-center">
+              <Zap className="w-5 h-5 mr-2 text-green-500" />
+              Live Traffic Data
+            </h3>
+            <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium animate-pulse">
+              LIVE from Google
+            </span>
+          </div>
           <button 
             onClick={() => refetch()} 
             disabled={isFetching}
-            className="text-sm text-red-600 hover:text-red-700 flex items-center disabled:opacity-50"
+            className="text-sm bg-green-600 text-white hover:bg-green-700 px-3 py-1 rounded-full flex items-center disabled:opacity-50"
           >
             {isFetching ? (
               <Loader2 className="w-4 h-4 mr-1 animate-spin" />

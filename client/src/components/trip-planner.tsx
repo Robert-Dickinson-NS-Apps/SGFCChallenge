@@ -192,12 +192,17 @@ export function TripPlanner({
     : DESTINATIONS[destination]?.name || 'Select destination';
 
   return (
-    <Card className="border-gray-200 mb-6">
+    <Card className="border-red-200 mb-6 bg-gradient-to-r from-red-50 to-white">
       <CardContent className="p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-          <Navigation className="w-5 h-5 mr-2 text-red-600" />
-          Plan Your Trip
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center">
+            <Navigation className="w-5 h-5 mr-2 text-red-600" />
+            Plan Your Trip
+          </h3>
+          <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+            Enter any address
+          </span>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -207,12 +212,12 @@ export function TripPlanner({
                 Starting Point (Singapore)
               </label>
               <Button
-                variant="ghost"
+                variant={useCustomStart ? "default" : "outline"}
                 size="sm"
                 onClick={() => setUseCustomStart(!useCustomStart)}
-                className="text-xs h-6 px-2"
+                className={`text-xs h-6 px-2 ${useCustomStart ? 'bg-red-600 hover:bg-red-700' : ''}`}
               >
-                {useCustomStart ? "Use preset" : "Custom address"}
+                {useCustomStart ? "✓ Custom" : "Enter custom address"}
               </Button>
             </div>
             {useCustomStart ? (
@@ -246,12 +251,12 @@ export function TripPlanner({
                 Destination (Malaysia)
               </label>
               <Button
-                variant="ghost"
+                variant={useCustomDest ? "default" : "outline"}
                 size="sm"
                 onClick={() => setUseCustomDest(!useCustomDest)}
-                className="text-xs h-6 px-2"
+                className={`text-xs h-6 px-2 ${useCustomDest ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
               >
-                {useCustomDest ? "Use preset" : "Custom address"}
+                {useCustomDest ? "✓ Custom" : "Enter custom address"}
               </Button>
             </div>
             {useCustomDest ? (

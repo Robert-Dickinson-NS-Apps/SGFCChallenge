@@ -60,20 +60,25 @@ export function FareCalculator({ selectedRoute, startPoint, destination }: FareC
   };
 
   return (
-    <Card className="border-gray-200 mb-6">
+    <Card className="border-purple-200 mb-6 bg-gradient-to-r from-purple-50 to-white">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800 flex items-center">
-            <Calculator className="w-5 h-5 mr-2 text-red-600" />
-            Fare Calculator
-          </h3>
+          <div className="flex items-center">
+            <h3 className="text-lg font-semibold text-gray-800 flex items-center">
+              <Calculator className="w-5 h-5 mr-2 text-purple-600" />
+              Fare Calculator
+            </h3>
+            <span className="ml-2 text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-medium">
+              Customizable
+            </span>
+          </div>
           <Button
-            variant="outline"
+            variant={showAdvanced ? "default" : "outline"}
             size="sm"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="text-sm"
+            className={`text-sm ${showAdvanced ? 'bg-purple-600 hover:bg-purple-700' : ''}`}
           >
-            {showAdvanced ? "Hide" : "Adjust"} Rates
+            {showAdvanced ? "✓ Rates Visible" : "Adjust Rates"}
           </Button>
         </div>
 
