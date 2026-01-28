@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Header } from "@/components/header";
 import { TripPlanner } from "@/components/trip-planner";
+import { LiveRouteData } from "@/components/live-route-data";
 import { RouteOverview } from "@/components/route-overview";
 import { MapVisualization } from "@/components/map-visualization";
 import { FareCalculator } from "@/components/fare-calculator";
@@ -10,10 +11,18 @@ import { InterestingFacts } from "@/components/interesting-facts";
 import { CallToAction } from "@/components/call-to-action";
 import { Footer } from "@/components/footer";
 
+interface CustomLocation {
+  name: string;
+  lat: number;
+  lng: number;
+}
+
 export default function Home() {
   const [selectedRoute, setSelectedRoute] = useState<'causeway' | 'secondLink'>('secondLink');
   const [startPoint, setStartPoint] = useState('orchard');
   const [destination, setDestination] = useState('forestCity');
+  const [customStart, setCustomStart] = useState<CustomLocation | null>(null);
+  const [customDestination, setCustomDestination] = useState<CustomLocation | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -24,6 +33,17 @@ export default function Home() {
           destination={destination}
           onStartPointChange={setStartPoint}
           onDestinationChange={setDestination}
+          customStart={customStart}
+          customDestination={customDestination}
+          onCustomStartChange={setCustomStart}
+          onCustomDestinationChange={setCustomDestination}
+        />
+        <LiveRouteData
+          selectedRoute={selectedRoute}
+          startPoint={startPoint}
+          destination={destination}
+          customStart={customStart}
+          customDestination={customDestination}
         />
         <RouteOverview 
           selectedRoute={selectedRoute} 
