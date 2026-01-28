@@ -35,6 +35,66 @@ export const START_POINTS: Record<string, { name: string; lat: number; lng: numb
     lat: 1.2847, 
     lng: 103.8610,
     addKm: { causeway: 3, secondLink: -2 }
+  },
+  jurong: {
+    name: 'Jurong East MRT',
+    lat: 1.3329,
+    lng: 103.7422,
+    addKm: { causeway: 8, secondLink: -12 } // Closer to Tuas
+  },
+  woodlands: {
+    name: 'Woodlands MRT',
+    lat: 1.4370,
+    lng: 103.7865,
+    addKm: { causeway: -18, secondLink: 5 } // Very close to Causeway
+  },
+  tampines: {
+    name: 'Tampines MRT',
+    lat: 1.3545,
+    lng: 103.9453,
+    addKm: { causeway: 10, secondLink: 25 } // East side
+  },
+  sentosa: {
+    name: 'Sentosa / VivoCity',
+    lat: 1.2644,
+    lng: 103.8220,
+    addKm: { causeway: 5, secondLink: -8 } // South, closer to Tuas
+  },
+  bugis: {
+    name: 'Bugis MRT',
+    lat: 1.3009,
+    lng: 103.8558,
+    addKm: { causeway: 1, secondLink: -1 }
+  },
+  novena: {
+    name: 'Novena MRT',
+    lat: 1.3204,
+    lng: 103.8439,
+    addKm: { causeway: -2, secondLink: 2 }
+  },
+  harbourfront: {
+    name: 'HarbourFront MRT',
+    lat: 1.2653,
+    lng: 103.8203,
+    addKm: { causeway: 5, secondLink: -8 }
+  },
+  clementi: {
+    name: 'Clementi MRT',
+    lat: 1.3151,
+    lng: 103.7654,
+    addKm: { causeway: 6, secondLink: -10 }
+  },
+  punggol: {
+    name: 'Punggol MRT',
+    lat: 1.4052,
+    lng: 103.9024,
+    addKm: { causeway: 5, secondLink: 20 } // Northeast
+  },
+  serangoon: {
+    name: 'Serangoon MRT',
+    lat: 1.3498,
+    lng: 103.8736,
+    addKm: { causeway: 3, secondLink: 8 }
   }
 };
 
