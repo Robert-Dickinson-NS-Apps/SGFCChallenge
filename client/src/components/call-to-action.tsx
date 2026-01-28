@@ -4,7 +4,7 @@ import { Car, ExternalLink, Smartphone } from "lucide-react";
 
 export function CallToAction() {
   return (
-    <Card className="border-gray-200 bg-gradient-to-r from-green-500 to-green-600 text-white mb-8">
+    <Card className="border-gray-200 bg-gradient-to-r from-red-600 to-red-700 text-white mb-8">
       <CardContent className="p-8 text-center">
         <div className="flex justify-center mb-4">
           <div className="bg-white/20 p-4 rounded-full">
@@ -19,7 +19,7 @@ export function CallToAction() {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
-            className="bg-white text-green-600 hover:bg-gray-100"
+            className="bg-white text-red-600 hover:bg-gray-100"
             onClick={() => window.open('https://www.grab.com/sg/', '_blank')}
           >
             <ExternalLink className="w-4 h-4 mr-2" />

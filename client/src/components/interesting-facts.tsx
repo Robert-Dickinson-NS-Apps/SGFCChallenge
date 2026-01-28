@@ -15,7 +15,7 @@ export function InterestingFacts() {
             const IconComponent = icons[index % icons.length];
             return (
               <div key={index} className="p-4 bg-gray-50 rounded-lg border border-gray-100">
-                <div className="bg-green-500 w-10 h-10 rounded-full flex items-center justify-center mb-3">
+                <div className="bg-red-600 w-10 h-10 rounded-full flex items-center justify-center mb-3">
                   <IconComponent className="text-white w-5 h-5" />
                 </div>
                 <h4 className="font-semibold text-gray-800 mb-2">{fact.title}</h4>

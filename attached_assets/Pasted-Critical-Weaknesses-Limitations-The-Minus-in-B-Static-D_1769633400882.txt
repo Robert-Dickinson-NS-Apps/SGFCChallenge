@@ -1,0 +1,81 @@
+Critical Weaknesses & Limitations (The "Minus" in B-)
+
+
+
+
+
+Static Data, Dynamic Problem: Travel time and ride-hailing fares are highly variable. Presenting fixed times (e.g., "55 min") and fare ranges without real-time traffic or demand data severely limits its accuracy for actual trip planning. It's a best-case scenario guide.
+
+
+
+Not a True "Planner": A true planner allows user-defined inputs (start/end points) and provides dynamic outputs. This is a pre-built guide for one specific journey. It lacks customization.
+
+
+
+Passive Visualization: The "MapGlobe" is a visualization, not an interactive map. Users cannot pan, zoom, or see the route in detail on a service like Google Maps.
+
+
+
+Opaque Calculations: The fare estimates lack transparency. What assumptions (date, base fare, per-km rate) underlie the $56-$69 range? Without this, users cannot verify or adjust for current rates.
+
+
+
+No Comparative Analysis: It only compares two road routes. It does not compare the cost/time against other modes (public bus, train, taxi, private car), which is a key part of travel planning.
+
+What Would Make It an "A" App (The Path to a True Planner)
+
+
+
+
+
+Integrate Live APIs:
+
+
+
+
+
+Use the Google Maps Embed API to show the actual route on an interactive map.
+
+
+
+Use the Google Distance Matrix API (or similar) to fetch real-time or predictive travel time estimates for the road portion, clearly annotating that border wait times are separate estimates.
+
+
+
+Build a Fare Calculator, Not an Estimate:
+
+
+
+
+
+Create a transparent calculator where users input the current Grab base fare and per-kilometer rate (which can be found in the app) to generate a personalized, explainable fare.
+
+
+
+Enable Customization:
+
+
+
+
+
+Add input fields for different start points (e.g., Changi Airport, Raffles Place) and different Johor destinations (e.g., Johor Bahru CIQ, Legoland).
+
+
+
+Provide Multi-Modal Comparison:
+
+
+
+
+
+Add a section comparing this Grab ride to the public bus (Causeway Link, SBS) in terms of cost, estimated time, and convenience.
+
+
+
+Incorporate Real-Time Elements:
+
+
+
+
+
+If possible, link to official checkpoint traffic camera feeds or crowdsourced border wait time sites to give users a sense of current conditions.

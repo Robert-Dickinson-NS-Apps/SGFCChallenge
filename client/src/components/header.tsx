@@ -19,7 +19,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="bg-green-500 p-2 rounded-lg">
+            <div className="bg-red-600 p-2 rounded-lg">
               <Car className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -31,7 +31,7 @@ export function Header() {
             <span className="text-gray-600 text-sm">Singapore → Forest City Marina Hotel</span>
             <Button 
               onClick={handleShare}
-              className="bg-green-500 text-white hover:bg-green-600"
+              className="bg-red-600 text-white hover:bg-red-700"
             >
               <Share className="w-4 h-4 mr-2" />
               Share Route

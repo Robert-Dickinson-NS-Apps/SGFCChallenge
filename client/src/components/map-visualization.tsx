@@ -35,7 +35,7 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                   onClick={() => setViewMode('map')}
                   className={cn(
                     viewMode === 'map' 
-                      ? 'bg-green-500 text-white hover:bg-green-600' 
+                      ? 'bg-red-600 text-white hover:bg-red-700' 
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   )}
                 >
@@ -48,7 +48,7 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                   onClick={() => setViewMode('globe')}
                   className={cn(
                     viewMode === 'globe' 
-                      ? 'bg-green-500 text-white hover:bg-green-600' 
+                      ? 'bg-red-600 text-white hover:bg-red-700' 
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   )}
                 >
@@ -73,13 +73,13 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                   />
                   <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
                     <div className="text-sm font-medium text-gray-800 flex items-center">
-                      <Navigation className="w-4 h-4 mr-2 text-green-500" />
+                      <Navigation className="w-4 h-4 mr-2 text-red-600" />
                       Driving Route
                     </div>
                     <div className="text-xs text-gray-600 mt-1">
                       {ROUTES[selectedRoute].name}
                     </div>
-                    <div className="text-xs text-green-600 mt-1">
+                    <div className="text-xs text-red-600 mt-1">
                       Click map for detailed directions
                     </div>
                   </div>
@@ -93,8 +93,8 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                     {/* Singapore island */}
                     <path 
                       d="M280 280 L380 270 L390 290 L385 310 L375 320 L350 325 L320 320 L295 310 L280 295 Z" 
-                      fill="#10b981" 
-                      stroke="#065f46" 
+                      fill="#dc2626" 
+                      stroke="#991b1b" 
                       strokeWidth="2"
                     />
                     
@@ -109,8 +109,8 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                     {/* Forest City development area */}
                     <path 
                       d="M520 260 L580 255 L590 270 L585 285 L570 290 L540 285 L525 275 Z" 
-                      fill="#22c55e" 
-                      stroke="#16a34a" 
+                      fill="#fecaca" 
+                      stroke="#dc2626" 
                       strokeWidth="2"
                     />
                     
@@ -138,7 +138,7 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                     ) : (
                       <path 
                         d="M330 290 Q290 300 280 280 Q350 260 550 270" 
-                        stroke="#22c55e" 
+                        stroke="#dc2626" 
                         strokeWidth="3" 
                         fill="none" 
                         strokeDasharray="6,3"
@@ -151,7 +151,7 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                     <text x="330" y="305" textAnchor="middle" fill="#1f2937" fontSize="10" fontWeight="bold">Orchard Road</text>
                     
                     {/* End point - Forest City Marina Hotel */}
-                    <circle cx="550" cy="270" r="6" fill="#22c55e" stroke="#ffffff" strokeWidth="2" />
+                    <circle cx="550" cy="270" r="6" fill="#dc2626" stroke="#ffffff" strokeWidth="2" />
                     <text x="550" y="255" textAnchor="middle" fill="#1f2937" fontSize="10" fontWeight="bold">Forest City</text>
                     
                     {/* Geographic labels */}
@@ -160,7 +160,7 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                     
                     {/* Car icon at starting point */}
                     <g transform="translate(315, 285)">
-                      <rect x="0" y="0" width="12" height="6" rx="2" fill="#22c55e" />
+                      <rect x="0" y="0" width="12" height="6" rx="2" fill="#dc2626" />
                       <circle cx="3" cy="7" r="2" fill="#1f2937" />
                       <circle cx="9" cy="7" r="2" fill="#1f2937" />
                     </g>
@@ -169,7 +169,7 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                     <g transform="translate(620, 20)">
                       <rect x="0" y="0" width="120" height="55" fill="white" opacity="0.9" rx="4" />
                       <text x="10" y="18" fill="#374151" fontSize="10" fontWeight="bold">Selected Route:</text>
-                      <line x1="10" y1="35" x2="30" y2="35" stroke={selectedRoute === 'causeway' ? "#ef4444" : "#22c55e"} strokeWidth="2" strokeDasharray="3,2" />
+                      <line x1="10" y1="35" x2="30" y2="35" stroke={selectedRoute === 'causeway' ? "#ef4444" : "#dc2626"} strokeWidth="2" strokeDasharray="3,2" />
                       <text x="35" y="38" fill="#374151" fontSize="9">{selectedRoute === 'causeway' ? 'Causeway' : 'Second Link'}</text>
                     </g>
                   </svg>
@@ -190,7 +190,7 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                 className={cn(
                   "flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors",
                   selectedRoute === 'secondLink' 
-                    ? "bg-green-500 text-white border-green-500" 
+                    ? "bg-red-600 text-white border-red-600" 
                     : "bg-gray-50 border-gray-200 hover:bg-gray-100"
                 )}
                 onClick={() => onRouteChange('secondLink')}
@@ -217,7 +217,7 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                 className={cn(
                   "flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors",
                   selectedRoute === 'causeway' 
-                    ? "bg-green-500 text-white border-green-500" 
+                    ? "bg-red-600 text-white border-red-600" 
                     : "bg-gray-50 border-gray-200 hover:bg-gray-100"
                 )}
                 onClick={() => onRouteChange('causeway')}
