@@ -18,6 +18,17 @@ export function RouteOverview({ selectedRoute, onRouteChange, startPoint, destin
   const startName = START_POINTS[startPoint]?.name || 'Singapore';
   const destName = DESTINATIONS[destination]?.name || 'Forest City';
 
+  // Create dynamic checkpoints based on selected start/destination
+  const dynamicCheckpoints = routeData.checkpoints?.map((checkpoint, index) => {
+    if (index === 0) {
+      return { ...checkpoint, name: `${startName}, Singapore`, description: `Starting point in Singapore` };
+    }
+    if (index === (routeData.checkpoints?.length || 0) - 1) {
+      return { ...checkpoint, name: destName, description: `Your destination in Malaysia` };
+    }
+    return checkpoint;
+  });
+
   return (
     <div className="mb-8">
       <div className="text-center mb-6">
@@ -127,7 +138,7 @@ export function RouteOverview({ selectedRoute, onRouteChange, startPoint, destin
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Route Checkpoints</h3>
           <div className="space-y-3">
-            {routeData.checkpoints?.map((checkpoint, index) => (
+            {dynamicCheckpoints?.map((checkpoint, index) => (
               <div key={index} className="flex items-center">
                 <div className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium mr-3",
@@ -155,7 +166,7 @@ export function RouteOverview({ selectedRoute, onRouteChange, startPoint, destin
                   </div>
                   <p className="text-sm text-gray-500">{checkpoint.description}</p>
                 </div>
-                {index < (routeData.checkpoints?.length || 0) - 1 && (
+                {index < (dynamicCheckpoints?.length || 0) - 1 && (
                   <ArrowRight className="w-4 h-4 text-gray-400 ml-2" />
                 )}
               </div>
