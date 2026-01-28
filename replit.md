@@ -1,19 +1,20 @@
-# SG to Forest City - Grab Car Route Planner
+# SG to Forest City - Drive Route Planner
 
 ## Overview
 
-SG to Forest City is a web application that helps users plan Grab car rides from Singapore (Orchard Road) to Forest City Marina Hotel in Malaysia. The app provides route comparisons via the Johor-Singapore Causeway and the Malaysia-Singapore Second Link, showing border checkpoints, estimated travel times, and approximate Grab fare estimates.
+SG to Forest City is a comprehensive web application that helps users plan trips from Singapore to Malaysia. The app provides route comparisons via the Johor-Singapore Causeway and the Malaysia-Singapore Second Link, showing border checkpoints, customizable fare calculations, multi-modal transport comparisons, and real-time traffic resources.
 
 ## User Preferences
 
-Preferred communication style: Simple, everyday language.
+- Preferred communication style: Simple, everyday language.
+- Theme: Singapore national colors (red and white)
 
 ## System Architecture
 
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript
 - **Build Tool**: Vite with development server integration
-- **Styling**: Tailwind CSS with green/Grab-themed color palette
+- **Styling**: Tailwind CSS with red/Singapore-themed color palette
 - **UI Components**: Radix UI primitives with shadcn/ui component library
 - **State Management**: React Query (@tanstack/react-query) for data fetching and caching
 - **Routing**: Wouter for lightweight client-side routing
@@ -34,22 +35,37 @@ Preferred communication style: Simple, everyday language.
 ### Core Application Components
 1. **Route Calculation Engine** (`client/src/lib/distance-calculator.ts`)
    - Two route options: Causeway (64 km) and Second Link (45 km)
-   - Fare estimates for different Grab car services
+   - Customizable fare calculator with adjustable rates
+   - Multiple start points: Orchard Road, Changi Airport, Raffles Place, Marina Bay Sands
+   - Multiple destinations: Forest City, JB Sentral, Legoland
    - Border checkpoint information for both routes
-   - Educational facts about the Singapore-Malaysia border region
+   - Public transport comparison data
+   - Real-time checkpoint camera links
 
-2. **Interactive Visualizations**
-   - Route overview with distance, time, and fare estimates
-   - Route selector for comparing Causeway vs Second Link
-   - Google Maps embed for detailed driving directions
+2. **Trip Planner** (`client/src/components/trip-planner.tsx`)
+   - Customizable start and end points
+   - Dynamic distance and time calculations
+
+3. **Fare Calculator** (`client/src/components/fare-calculator.tsx`)
+   - Transparent fare calculation with adjustable parameters
+   - Base fare, per-km rate, and per-minute rate inputs
+   - Calculation breakdown for user verification
+
+4. **Transport Comparison** (`client/src/components/transport-comparison.tsx`)
+   - Grab vs public bus comparison
+   - Cost, duration, and convenience factors
+   - Recommendations based on travel needs
+
+5. **Checkpoint Resources** (`client/src/components/checkpoint-resources.tsx`)
+   - Links to live traffic cameras (LTA)
+   - Crowdsourced border wait times
+   - Peak hours warnings and travel tips
+
+6. **Interactive Visualizations**
+   - Route overview with distance, time, and checkpoints
+   - Google Maps embed with "Open in Google Maps" link
    - Custom SVG globe view showing both routes
-   - Checkpoint timeline showing immigration stops
-
-3. **UI Component Library**
-   - Complete shadcn/ui implementation
-   - Custom green/Grab-themed design system
-   - Responsive design with mobile support
-   - Interactive route selection cards
+   - Immigration arrival card links (SGAC and MDAC)
 
 ### Shared Schema (`shared/schema.ts`)
 - Location coordinates (latitude, longitude, name)
@@ -61,25 +77,28 @@ Preferred communication style: Simple, everyday language.
 ## Routes Included
 
 ### Via Johor-Singapore Causeway
-- Distance: 64 km (40 miles)
+- Distance: 64 km (40 miles) from Orchard Road
 - Estimated time: ~75 minutes
 - Checkpoints: Woodlands → Sultan Iskandar Building → JB City
 - Notes: Historic route, passes through JB city center
 
 ### Via Malaysia-Singapore Second Link
-- Distance: 45 km (28 miles)
+- Distance: 45 km (28 miles) from Orchard Road
 - Estimated time: ~55 minutes
 - Checkpoints: Tuas → Sultan Abu Bakar Complex → Gelang Patah
-- Notes: Faster route, typically less congested
+- Notes: Faster route, typically less congested (recommended)
 
-## Educational Content
+## External Resources Linked
 
-The app includes real facts about:
-- Johor-Singapore Causeway (built 1924, 1.056 km, 350,000 daily travelers)
-- Johor Strait geography (50 km long, 8-12 m deep)
-- Malaysia-Singapore Second Link (opened 1998)
-- Forest City development and Marina Hotel
-- Cross-border travel tips
+### Immigration Arrival Cards
+- Singapore Arrival Card (SGAC): https://eservices.ica.gov.sg/sgarrivalcard/
+- Malaysia Digital Arrival Card (MDAC): https://imigresen-online.imi.gov.my/mdac/main
+
+### Traffic & Border Info
+- LTA Woodlands Checkpoint Camera
+- LTA Tuas Checkpoint Camera
+- Beat The Jam (crowdsourced wait times)
+- One Motoring Traffic Info
 
 ## External Dependencies
 
@@ -111,9 +130,11 @@ The app includes real facts about:
 
 ## Recent Changes
 
-- **January 2026**: Changed from running calculator to Grab car route planner
-- Added two route options (Causeway and Second Link)
-- Added border checkpoint information with immigration details
-- Added Grab fare estimates for different service levels
-- Updated destination to Forest City Marina Hotel
-- Added real educational facts about the Singapore-Malaysia border region
+- **January 2026**: Major upgrade to comprehensive route planner
+  - Added customizable start/end points (Orchard, Changi, Raffles, Marina Bay)
+  - Added transparent fare calculator with adjustable rates
+  - Added multi-modal transport comparison (Grab vs bus)
+  - Added live traffic camera and border wait time links
+  - Added immigration arrival card links (SGAC, MDAC)
+  - Changed theme from green/Grab to red/Singapore national colors
+  - Added "Open in Google Maps" link for detailed directions

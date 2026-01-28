@@ -1,24 +1,34 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Globe, Navigation } from "lucide-react";
-import { ROUTES } from "@/lib/distance-calculator";
+import { MapPin, Globe, Navigation, ExternalLink } from "lucide-react";
+import { ROUTES, START_POINTS, DESTINATIONS } from "@/lib/distance-calculator";
 import { cn } from "@/lib/utils";
 
 interface MapVisualizationProps {
   selectedRoute: 'causeway' | 'secondLink';
   onRouteChange: (route: 'causeway' | 'secondLink') => void;
+  startPoint: string;
+  destination: string;
 }
 
-export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizationProps) {
+export function MapVisualization({ selectedRoute, onRouteChange, startPoint, destination }: MapVisualizationProps) {
   const [viewMode, setViewMode] = useState<'map' | 'globe'>('map');
 
+  const start = START_POINTS[startPoint] || START_POINTS.orchard;
+  const dest = DESTINATIONS[destination] || DESTINATIONS.forestCity;
+
   const getMapUrl = () => {
-    if (selectedRoute === 'causeway') {
-      return "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d127646.5!2d103.75!3d1.38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x31da19a8df1c3f31%3A0x3baa355cd9b9a299!2sOrchard%20Road%2C%20Singapore!3m2!1d1.3048035!2d103.8318358!4m5!1s0x31da6d80d2b1c14f%3A0x4bf50f7a4b8e6d0e!2sForest%20City%20Marina%20Hotel%2C%20Johor%2C%20Malaysia!3m2!1d1.4259!2d103.6319!5e0!3m2!1sen!2s!4v1642071234567!5m2!1sen!2s";
-    } else {
-      return "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d127646.5!2d103.65!3d1.35!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x31da19a8df1c3f31%3A0x3baa355cd9b9a299!2sOrchard%20Road%2C%20Singapore!3m2!1d1.3048035!2d103.8318358!4m5!1s0x31da6d80d2b1c14f%3A0x4bf50f7a4b8e6d0e!2sForest%20City%20Marina%20Hotel%2C%20Johor%2C%20Malaysia!3m2!1d1.4259!2d103.6319!5e0!3m2!1sen!2s!4v1642071234567!5m2!1sen!2s";
-    }
+    const waypoint = selectedRoute === 'causeway' ? 'Woodlands Checkpoint, Singapore' : 'Tuas Checkpoint, Singapore';
+    const origin = encodeURIComponent(start.name + ', Singapore');
+    const destEncoded = encodeURIComponent(dest.name + ', Malaysia');
+    const waypointEncoded = encodeURIComponent(waypoint);
+    return `https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d127646.5!2d103.7!3d1.35!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s${origin}!3m2!1d${start.lat}!2d${start.lng}!4m5!1s${destEncoded}!3m2!1d${dest.lat}!2d${dest.lng}!5e0!3m2!1sen!2s!4v1642071234567!5m2!1sen!2s`;
+  };
+
+  const getDirectionsUrl = () => {
+    const waypoint = selectedRoute === 'causeway' ? 'Woodlands+Checkpoint+Singapore' : 'Tuas+Checkpoint+Singapore';
+    return `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(start.name + ', Singapore')}&destination=${encodeURIComponent(dest.name + ', Malaysia')}&waypoints=${waypoint}&travelmode=driving`;
   };
 
   return (
@@ -79,9 +89,15 @@ export function MapVisualization({ selectedRoute, onRouteChange }: MapVisualizat
                     <div className="text-xs text-gray-600 mt-1">
                       {ROUTES[selectedRoute].name}
                     </div>
-                    <div className="text-xs text-red-600 mt-1">
-                      Click map for detailed directions
-                    </div>
+                    <a 
+                      href={getDirectionsUrl()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-xs text-red-600 mt-2 hover:text-red-700 font-medium"
+                    >
+                      <ExternalLink className="w-3 h-3 mr-1" />
+                      Open in Google Maps
+                    </a>
                   </div>
                 </div>
               ) : (

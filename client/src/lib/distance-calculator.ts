@@ -10,6 +10,63 @@ export function kmToMiles(km: number): number {
   return km / 1.60934;
 }
 
+// Starting point options
+export const START_POINTS: Record<string, { name: string; lat: number; lng: number; addKm: Record<string, number> }> = {
+  orchard: { 
+    name: 'Orchard Road', 
+    lat: 1.3041, 
+    lng: 103.8315,
+    addKm: { causeway: 0, secondLink: 0 } // Base distances
+  },
+  changi: { 
+    name: 'Changi Airport', 
+    lat: 1.3644, 
+    lng: 103.9915,
+    addKm: { causeway: 15, secondLink: 35 } // Additional km from Changi
+  },
+  raffles: { 
+    name: 'Raffles Place', 
+    lat: 1.2840, 
+    lng: 103.8517,
+    addKm: { causeway: 2, secondLink: -3 } // Slight difference from CBD
+  },
+  marina: { 
+    name: 'Marina Bay Sands', 
+    lat: 1.2847, 
+    lng: 103.8610,
+    addKm: { causeway: 3, secondLink: -2 }
+  }
+};
+
+// Destination options
+export const DESTINATIONS: Record<string, { name: string; lat: number; lng: number; adjustKm: Record<string, number> }> = {
+  forestCity: {
+    name: 'Forest City Marina Hotel',
+    lat: 1.4259,
+    lng: 103.6319,
+    adjustKm: { causeway: 0, secondLink: 0 }
+  },
+  jbCiq: {
+    name: 'JB Sentral / CIQ',
+    lat: 1.4617,
+    lng: 103.7614,
+    adjustKm: { causeway: -25, secondLink: 10 }
+  },
+  legoland: {
+    name: 'Legoland Malaysia',
+    lat: 1.4250,
+    lng: 103.6287,
+    adjustKm: { causeway: -5, secondLink: -2 }
+  }
+};
+
+// Default fare calculation parameters (can be overridden by user)
+export const DEFAULT_FARE_PARAMS = {
+  baseFare: 15,
+  perKmRate: 0.75,
+  perMinRate: 0.25
+};
+
 // Checkpoints for Causeway route
 const CAUSEWAY_CHECKPOINTS: Checkpoint[] = [
   { name: "Orchard Road, Singapore", country: "Singapore", type: "waypoint", description: "Starting point in Singapore's famous shopping district" },
@@ -50,14 +107,13 @@ export const ROUTES: Record<string, RouteOption> = {
   }
 };
 
-// Calculate Grab fare estimates
-export function calculateFareEstimates(distanceKm: number, estimatedMinutes: number): FareEstimate[] {
-  // Base fare calculations (approximate Grab cross-border rates)
-  const baseFareSGD = 15; // Base cross-border fare
-  const perKmRate = 0.75; // SGD per km
-  const perMinRate = 0.25; // SGD per minute
-  
-  const baseCost = baseFareSGD + (distanceKm * perKmRate) + (estimatedMinutes * perMinRate);
+// Calculate Grab fare estimates with customizable parameters
+export function calculateFareEstimates(
+  distanceKm: number, 
+  estimatedMinutes: number,
+  params: { baseFare: number; perKmRate: number; perMinRate: number } = DEFAULT_FARE_PARAMS
+): FareEstimate[] {
+  const baseCost = params.baseFare + (distanceKm * params.perKmRate) + (estimatedMinutes * params.perMinRate);
   
   return [
     {
@@ -82,6 +138,81 @@ export function calculateFareEstimates(distanceKm: number, estimatedMinutes: num
       estimatedMinutes
     }
   ];
+}
+
+// Public bus/transport options for comparison
+export const PUBLIC_TRANSPORT_OPTIONS = [
+  {
+    name: "Causeway Link Bus",
+    route: "CW1/CW2 from JB Sentral",
+    cost: "RM 4.20 (~S$1.25)",
+    duration: "45-90 min (varies with traffic)",
+    frequency: "Every 15-30 min",
+    notes: "Budget option, need to alight for immigration"
+  },
+  {
+    name: "SBS Transit 170",
+    route: "Queen Street to JB Sentral",
+    cost: "S$1.09 - S$2.29",
+    duration: "60-120 min",
+    frequency: "Every 8-15 min",
+    notes: "Most affordable, crosses Causeway only"
+  },
+  {
+    name: "Transtar Cross-Border Bus",
+    route: "Various SG pickups to JB",
+    cost: "S$6 - S$10",
+    duration: "60-90 min",
+    frequency: "Scheduled departures",
+    notes: "More comfortable, fewer stops"
+  }
+];
+
+// Border checkpoint resources
+export const CHECKPOINT_RESOURCES = [
+  {
+    name: "Woodlands Checkpoint Camera",
+    url: "https://onemotoring.lta.gov.sg/content/onemotoring/home/driving/traffic_information/traffic-cameras/woodlands.html",
+    type: "camera",
+    description: "LTA live traffic camera at Woodlands"
+  },
+  {
+    name: "Tuas Checkpoint Camera", 
+    url: "https://onemotoring.lta.gov.sg/content/onemotoring/home/driving/traffic_information/traffic-cameras/tuas.html",
+    type: "camera",
+    description: "LTA live traffic camera at Tuas"
+  },
+  {
+    name: "Beat The Jam",
+    url: "https://www.beatthejam.asia/",
+    type: "crowdsourced",
+    description: "Crowdsourced border wait times"
+  },
+  {
+    name: "One Motoring Traffic Info",
+    url: "https://onemotoring.lta.gov.sg/content/onemotoring/home/driving/traffic_information.html",
+    type: "official",
+    description: "LTA Singapore traffic information"
+  }
+];
+
+// Get adjusted distance based on start point and destination
+export function getAdjustedDistance(
+  routeType: 'causeway' | 'secondLink',
+  startPoint: string = 'orchard',
+  destination: string = 'forestCity'
+): { distanceKm: number; estimatedMinutes: number } {
+  const baseRoute = ROUTES[routeType];
+  const start = START_POINTS[startPoint] || START_POINTS.orchard;
+  const dest = DESTINATIONS[destination] || DESTINATIONS.forestCity;
+  
+  const addKm = start.addKm[routeType] || 0;
+  const adjustKm = dest.adjustKm[routeType] || 0;
+  
+  const distanceKm = Math.max(10, baseRoute.distanceKm + addKm + adjustKm);
+  const estimatedMinutes = Math.round(baseRoute.estimatedMinutes * (distanceKm / baseRoute.distanceKm));
+  
+  return { distanceKm, estimatedMinutes };
 }
 
 // Educational facts about the region

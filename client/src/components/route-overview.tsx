@@ -1,23 +1,28 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Route, MapPin, Clock, Car, ArrowRight, FileText, ExternalLink } from "lucide-react";
-import { getRouteData, getRouteComparison, calculateFareEstimates, formatTravelTime, ROUTES } from "@/lib/distance-calculator";
+import { Route, MapPin, Clock, ArrowRight, FileText, ExternalLink } from "lucide-react";
+import { getRouteData, formatTravelTime, ROUTES, getAdjustedDistance, START_POINTS, DESTINATIONS } from "@/lib/distance-calculator";
 import { cn } from "@/lib/utils";
 
 interface RouteOverviewProps {
   selectedRoute: 'causeway' | 'secondLink';
   onRouteChange: (route: 'causeway' | 'secondLink') => void;
+  startPoint: string;
+  destination: string;
 }
 
-export function RouteOverview({ selectedRoute, onRouteChange }: RouteOverviewProps) {
+export function RouteOverview({ selectedRoute, onRouteChange, startPoint, destination }: RouteOverviewProps) {
   const routeData = getRouteData(selectedRoute);
-  const comparison = getRouteComparison();
-  const fareEstimates = calculateFareEstimates(routeData.distanceKm, ROUTES[selectedRoute].estimatedMinutes);
+  const adjustedRoute = getAdjustedDistance(selectedRoute, startPoint, destination);
+  const adjustedSecondLink = getAdjustedDistance('secondLink', startPoint, destination);
+  const adjustedCauseway = getAdjustedDistance('causeway', startPoint, destination);
+  const startName = START_POINTS[startPoint]?.name || 'Singapore';
+  const destName = DESTINATIONS[destination]?.name || 'Forest City';
 
   return (
     <div className="mb-8">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Drive Routes: Singapore to Forest City</h2>
-        <p className="text-gray-600 text-lg">Estimate your trip time and Grab fare to Forest City Marina Hotel</p>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Drive Routes: {startName} to {destName}</h2>
+        <p className="text-gray-600 text-lg">Compare routes and estimate your trip time</p>
       </div>
       
       {/* Route Selector */}
@@ -38,8 +43,8 @@ export function RouteOverview({ selectedRoute, onRouteChange }: RouteOverviewPro
                 <p className="text-sm text-gray-600">Tuas → Forest City</p>
               </div>
               <div className="text-right">
-                <p className="font-bold text-red-600">{comparison.secondLink.distanceKm} km</p>
-                <p className="text-sm text-gray-500">{formatTravelTime(comparison.secondLink.estimatedMinutes)}</p>
+                <p className="font-bold text-red-600">{adjustedSecondLink.distanceKm} km</p>
+                <p className="text-sm text-gray-500">{formatTravelTime(adjustedSecondLink.estimatedMinutes)}</p>
               </div>
             </div>
           </CardContent>
@@ -61,8 +66,8 @@ export function RouteOverview({ selectedRoute, onRouteChange }: RouteOverviewPro
                 <p className="text-sm text-gray-600">Woodlands → JB → Forest City</p>
               </div>
               <div className="text-right">
-                <p className="font-bold text-gray-700">{comparison.causeway.distanceKm} km</p>
-                <p className="text-sm text-gray-500">{formatTravelTime(comparison.causeway.estimatedMinutes)}</p>
+                <p className="font-bold text-gray-700">{adjustedCauseway.distanceKm} km</p>
+                <p className="text-sm text-gray-500">{formatTravelTime(adjustedCauseway.estimatedMinutes)}</p>
               </div>
             </div>
           </CardContent>
@@ -76,8 +81,8 @@ export function RouteOverview({ selectedRoute, onRouteChange }: RouteOverviewPro
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm font-medium">Total Distance</p>
-                <p className="text-2xl font-bold text-gray-800">{routeData.distanceKm} km</p>
-                <p className="text-gray-500 text-sm">{Math.round(routeData.distance)} miles</p>
+                <p className="text-2xl font-bold text-gray-800">{adjustedRoute.distanceKm} km</p>
+                <p className="text-gray-500 text-sm">{Math.round(adjustedRoute.distanceKm * 0.621)} miles</p>
               </div>
               <div className="bg-red-100 p-3 rounded-lg">
                 <Route className="text-red-600 w-6 h-6" />
@@ -91,7 +96,7 @@ export function RouteOverview({ selectedRoute, onRouteChange }: RouteOverviewPro
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm font-medium">Estimated Time</p>
-                <p className="text-2xl font-bold text-gray-800">{formatTravelTime(ROUTES[selectedRoute].estimatedMinutes)}</p>
+                <p className="text-2xl font-bold text-gray-800">{formatTravelTime(adjustedRoute.estimatedMinutes)}</p>
                 <p className="text-gray-500 text-sm">Without heavy traffic</p>
               </div>
               <div className="bg-blue-100 p-3 rounded-lg">
@@ -116,34 +121,6 @@ export function RouteOverview({ selectedRoute, onRouteChange }: RouteOverviewPro
           </CardContent>
         </Card>
       </div>
-
-      {/* Fare Estimates */}
-      <Card className="border-gray-200 mb-6">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-            <Car className="w-5 h-5 mr-2 text-red-600" />
-            Estimated Grab Fares
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {fareEstimates.map((fare) => (
-              <div 
-                key={fare.service}
-                className="bg-gray-50 rounded-lg p-4 border border-gray-200"
-              >
-                <p className="font-medium text-gray-800">{fare.service}</p>
-                <p className="text-2xl font-bold text-red-600">
-                  ${fare.minFare} - ${fare.maxFare}
-                </p>
-                <p className="text-sm text-gray-500">{fare.currency}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-gray-400 mt-4">
-            * Fare estimates are approximate and may vary based on traffic, demand, and actual route taken. 
-            Cross-border Grab rides require booking through the app.
-          </p>
-        </CardContent>
-      </Card>
 
       {/* Route Checkpoints */}
       <Card className="border-gray-200">
