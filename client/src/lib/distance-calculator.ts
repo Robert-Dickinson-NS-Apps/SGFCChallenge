@@ -148,7 +148,9 @@ export const PUBLIC_TRANSPORT_OPTIONS = [
     cost: "RM 4.20 (~S$1.25)",
     duration: "45-90 min (varies with traffic)",
     frequency: "Every 15-30 min",
-    notes: "Budget option, need to alight for immigration"
+    notes: "Budget option, need to alight for immigration",
+    bookingUrl: "https://www.causewaylink.com.my/",
+    type: "bus"
   },
   {
     name: "SBS Transit 170",
@@ -156,15 +158,57 @@ export const PUBLIC_TRANSPORT_OPTIONS = [
     cost: "S$1.09 - S$2.29",
     duration: "60-120 min",
     frequency: "Every 8-15 min",
-    notes: "Most affordable, crosses Causeway only"
+    notes: "Most affordable, crosses Causeway only",
+    bookingUrl: "https://www.sbstransit.com.sg/",
+    type: "bus"
   },
   {
-    name: "Transtar Cross-Border Bus",
+    name: "Transtar Cross-Border",
     route: "Various SG pickups to JB",
     cost: "S$6 - S$10",
     duration: "60-90 min",
     frequency: "Scheduled departures",
-    notes: "More comfortable, fewer stops"
+    notes: "More comfortable, fewer stops",
+    bookingUrl: "https://www.transtar.travel/",
+    type: "bus"
+  },
+  {
+    name: "KKKL Express",
+    route: "Singapore to JB & Forest City",
+    cost: "S$8 - S$15",
+    duration: "75-120 min",
+    frequency: "Multiple daily",
+    notes: "Direct to Forest City available",
+    bookingUrl: "https://www.kkkl.com.my/",
+    type: "bus"
+  }
+];
+
+// Taxi/ride-hailing alternatives
+export const TAXI_OPTIONS = [
+  {
+    name: "Grab",
+    cost: "S$60-100",
+    duration: "45-75 min",
+    notes: "Door-to-door, most convenient",
+    bookingUrl: "https://grab.onelink.me/2695613898",
+    type: "ridehail"
+  },
+  {
+    name: "Gojek",
+    cost: "S$55-95",
+    duration: "45-75 min",
+    notes: "Alternative to Grab, similar service",
+    bookingUrl: "https://www.gojek.com/sg/",
+    type: "ridehail"
+  },
+  {
+    name: "ComfortDelGro Taxi",
+    cost: "S$70-120",
+    duration: "45-75 min",
+    notes: "Traditional taxi, metered fare + surcharges",
+    bookingUrl: "https://www.cdgtaxi.com.sg/",
+    type: "taxi"
   }
 ];
 
