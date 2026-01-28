@@ -6,6 +6,7 @@ import { RouteOverview } from "@/components/route-overview";
 import { MapVisualization } from "@/components/map-visualization";
 import { FareCalculator } from "@/components/fare-calculator";
 import { TransportComparison } from "@/components/transport-comparison";
+import { DocumentsTab } from "@/components/documents-tab";
 import { CheckpointResources } from "@/components/checkpoint-resources";
 import { InterestingFacts } from "@/components/interesting-facts";
 import { CallToAction } from "@/components/call-to-action";
@@ -67,6 +68,7 @@ export default function Home() {
           startPoint={startPoint}
           destination={destination}
         />
+        <DocumentsTab />
         <CheckpointResources selectedRoute={selectedRoute} />
         <InterestingFacts />
         <CallToAction />
