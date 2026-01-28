@@ -7,7 +7,6 @@ import { FareCalculator } from "@/components/fare-calculator";
 import { TransportComparison } from "@/components/transport-comparison";
 import { CheckpointResources } from "@/components/checkpoint-resources";
 import { InterestingFacts } from "@/components/interesting-facts";
-import { GlobeView } from "@/components/globe-view";
 import { CallToAction } from "@/components/call-to-action";
 import { Footer } from "@/components/footer";
 
@@ -50,7 +49,6 @@ export default function Home() {
         />
         <CheckpointResources selectedRoute={selectedRoute} />
         <InterestingFacts />
-        <GlobeView selectedRoute={selectedRoute} />
         <CallToAction />
       </main>
       <Footer />
