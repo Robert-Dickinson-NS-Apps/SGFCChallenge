@@ -144,6 +144,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/maps-key", (req: Request, res: Response) => {
+    if (!GOOGLE_MAPS_API_KEY) {
+      return res.status(500).json({ error: "Google Maps API key not configured" });
+    }
+    res.json({ key: GOOGLE_MAPS_API_KEY });
+  });
+
   app.get("/api/places/details", async (req: Request, res: Response) => {
     try {
       const { place_id } = req.query;

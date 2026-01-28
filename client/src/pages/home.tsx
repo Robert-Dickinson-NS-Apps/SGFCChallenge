@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Header } from "@/components/header";
 import { TripPlanner } from "@/components/trip-planner";
 import { LiveRouteData } from "@/components/live-route-data";
+import { BorderQueueTimes } from "@/components/border-queue-times";
 import { RouteOverview } from "@/components/route-overview";
-import { MapVisualization } from "@/components/map-visualization";
+import { InteractiveMap } from "@/components/interactive-map";
 import { FareCalculator } from "@/components/fare-calculator";
 import { TransportComparison } from "@/components/transport-comparison";
 import { DocumentsTab } from "@/components/documents-tab";
@@ -46,17 +47,20 @@ export default function Home() {
           customStart={customStart}
           customDestination={customDestination}
         />
+        <BorderQueueTimes selectedRoute={selectedRoute} />
         <RouteOverview 
           selectedRoute={selectedRoute} 
           onRouteChange={setSelectedRoute}
           startPoint={startPoint}
           destination={destination}
         />
-        <MapVisualization 
+        <InteractiveMap 
           selectedRoute={selectedRoute} 
           onRouteChange={setSelectedRoute}
           startPoint={startPoint}
           destination={destination}
+          customStart={customStart}
+          customDestination={customDestination}
         />
         <FareCalculator 
           selectedRoute={selectedRoute}
