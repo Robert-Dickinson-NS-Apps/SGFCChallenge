@@ -5,8 +5,8 @@ export function Header() {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'SG to Forest City - Grab Car Route Planner',
-        text: 'Plan your Grab ride from Singapore to Forest City Marina Hotel!',
+        title: 'Singapore to Forest City, Malaysia - Route Planner',
+        text: 'Plan your trip from Singapore to Forest City, Malaysia!',
         url: window.location.href
       });
     } else {
@@ -23,7 +23,7 @@ export function Header() {
               <Car className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">SG to Forest City</h1>
+              <h1 className="text-2xl font-bold text-gray-800">Singapore to Forest City, Malaysia</h1>
               <p className="text-sm text-gray-500">Drive Route & Trip Time Estimator</p>
             </div>
           </div>
