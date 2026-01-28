@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Route, MapPin, Clock, Car, ArrowRight } from "lucide-react";
+import { Route, MapPin, Clock, Car, ArrowRight, FileText, ExternalLink } from "lucide-react";
 import { getRouteData, getRouteComparison, calculateFareEstimates, formatTravelTime, ROUTES } from "@/lib/distance-calculator";
 import { cn } from "@/lib/utils";
 
@@ -184,6 +184,54 @@ export function RouteOverview({ selectedRoute, onRouteChange }: RouteOverviewPro
               </div>
             ))}
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Immigration Arrival Cards */}
+      <Card className="border-gray-200 mt-6">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+            <FileText className="w-5 h-5 mr-2 text-purple-500" />
+            Required Arrival Cards
+          </h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Complete these digital forms within 3 days before your trip. Both are free and take about 5 minutes each.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a 
+              href="https://eservices.ica.gov.sg/sgarrivalcard/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block bg-red-50 rounded-lg p-4 border border-red-200 hover:border-red-400 transition-colors"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-gray-800">Singapore Arrival Card (SGAC)</p>
+                  <p className="text-sm text-gray-600">For returning to Singapore</p>
+                  <p className="text-xs text-red-600 mt-1">Official ICA Website</p>
+                </div>
+                <ExternalLink className="w-5 h-5 text-red-500" />
+              </div>
+            </a>
+            <a 
+              href="https://imigresen-online.imi.gov.my/mdac/main" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block bg-blue-50 rounded-lg p-4 border border-blue-200 hover:border-blue-400 transition-colors"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-gray-800">Malaysia Digital Arrival Card (MDAC)</p>
+                  <p className="text-sm text-gray-600">For entering Malaysia</p>
+                  <p className="text-xs text-blue-600 mt-1">Official Immigration Website</p>
+                </div>
+                <ExternalLink className="w-5 h-5 text-blue-500" />
+              </div>
+            </a>
+          </div>
+          <p className="text-xs text-gray-400 mt-4">
+            * Singapore citizens are exempt from MDAC. Check official websites for full exemption details.
+          </p>
         </CardContent>
       </Card>
     </div>
