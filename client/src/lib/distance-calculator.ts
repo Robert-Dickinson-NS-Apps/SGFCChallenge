@@ -1,85 +1,88 @@
-import { Location, Route, Speed, HealthStats } from "@shared/schema";
-
-// Calculate great circle distance between two points using Haversine formula
-export function calculateDistance(start: Location, end: Location): number {
-  const R = 3959; // Earth's radius in miles
-  const dLat = (end.lat - start.lat) * Math.PI / 180;
-  const dLon = (end.lng - start.lng) * Math.PI / 180;
-  const lat1 = start.lat * Math.PI / 180;
-  const lat2 = end.lat * Math.PI / 180;
-
-  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-  return R * c;
-}
+import { Location, Route, Checkpoint, FareEstimate, RouteOption } from "@shared/schema";
 
 // Convert miles to kilometers
 export function milesToKm(miles: number): number {
   return miles * 1.60934;
 }
 
-// Calculate running times for different speeds
-export function calculateRunningTimes(distance: number): Speed[] {
-  const speeds = [
-    { name: 'Leisurely Jog', mph: 5 },
-    { name: 'Average Run', mph: 6 },
-    { name: 'Fast Run', mph: 8 }
-  ];
-
-  return speeds.map(speed => {
-    const totalMinutes = Math.round((distance / speed.mph) * 60);
-    return {
-      ...speed,
-      hours: Math.round(totalMinutes / 60),
-      days: totalMinutes,
-      minutes: totalMinutes
-    };
-  });
+// Convert km to miles
+export function kmToMiles(km: number): number {
+  return km / 1.60934;
 }
 
-// Calculate calories burned based on distance and pace
-export function calculateHealthStats(distanceMiles: number, weightKg: number = 70): HealthStats {
-  // Running burns approximately 100 calories per mile for a 155lb person
-  // Adjusted by weight: (weight in kg / 70) * 100 calories per mile
-  const caloriesPerMile = (weightKg / 70) * 100;
-  const calories = Math.round(distanceMiles * caloriesPerMile);
-  
-  // Carbon savings: driving produces ~0.21 kg CO2 per km
-  // Running produces essentially 0 (just increased breathing)
-  const distanceKm = milesToKm(distanceMiles);
-  const carbonSaved = Math.round(distanceKm * 0.21 * 10) / 10;
-  
-  // Hydration: approximately 500ml per 30 minutes of running
-  // Average run speed of 6 mph = 10 min/mile
-  const runningMinutes = distanceMiles * 10;
-  const waterBottles = Math.ceil((runningMinutes / 30) * 0.5 / 0.5); // 500ml bottles
-  
-  return {
-    calories,
-    carbonSaved,
-    waterBottles
-  };
-}
+// Checkpoints for Causeway route
+const CAUSEWAY_CHECKPOINTS: Checkpoint[] = [
+  { name: "Orchard Road, Singapore", country: "Singapore", type: "waypoint", description: "Starting point in Singapore's famous shopping district" },
+  { name: "Woodlands Checkpoint", country: "Singapore", type: "immigration", description: "Singapore Immigration & Customs Authority checkpoint" },
+  { name: "Johor-Singapore Causeway", country: "Singapore", type: "waypoint", description: "1.056 km causeway built in 1924, one of world's busiest border crossings" },
+  { name: "Sultan Iskandar Building (CIQ)", country: "Malaysia", type: "immigration", description: "Malaysia Immigration checkpoint in Johor Bahru" },
+  { name: "Johor Bahru City", country: "Malaysia", type: "waypoint", description: "Capital of Johor state, Malaysia" },
+  { name: "Forest City Marina Hotel", country: "Malaysia", type: "waypoint", description: "Destination in Forest City development" }
+];
+
+// Checkpoints for Second Link route
+const SECOND_LINK_CHECKPOINTS: Checkpoint[] = [
+  { name: "Orchard Road, Singapore", country: "Singapore", type: "waypoint", description: "Starting point in Singapore's famous shopping district" },
+  { name: "Tuas Checkpoint", country: "Singapore", type: "immigration", description: "Singapore Immigration at Tuas (less congested than Woodlands)" },
+  { name: "Malaysia-Singapore Second Link", country: "Singapore", type: "waypoint", description: "1.92 km bridge opened in 1998, less traffic than Causeway" },
+  { name: "Sultan Abu Bakar Complex (CIQ)", country: "Malaysia", type: "immigration", description: "Malaysia Immigration at Tanjung Kupang" },
+  { name: "Gelang Patah", country: "Malaysia", type: "waypoint", description: "Town near Forest City" },
+  { name: "Forest City Marina Hotel", country: "Malaysia", type: "waypoint", description: "Destination in Forest City development" }
+];
 
 // Route data for different paths
-export const ROUTES = {
+export const ROUTES: Record<string, RouteOption> = {
   causeway: {
     name: 'Via Johor-Singapore Causeway',
-    distance: 40, // miles (64 km actual road distance)
-    distanceKm: 64,
-    description: 'Historic route via the Johor-Singapore Causeway (built 1924)',
-    waypoints: ['Orchard Road', 'Woodlands Checkpoint', 'Sultan Iskandar Building', 'Johor Bahru', 'Forest City']
+    distance: 40, // miles
+    distanceKm: 64, // km - actual road distance
+    estimatedMinutes: 75, // without traffic, with border crossing
+    description: 'Historic route via the Johor-Singapore Causeway (built 1924). Longer route but passes through JB city center.',
+    checkpoints: CAUSEWAY_CHECKPOINTS
   },
   secondLink: {
     name: 'Via Malaysia-Singapore Second Link',
-    distance: 28, // miles (45 km - shorter for Forest City)
-    distanceKm: 45,
-    description: 'Faster route via Tuas Second Link (opened 1998)',
-    waypoints: ['Orchard Road', 'Tuas Checkpoint', 'Second Link', 'Gelang Patah', 'Forest City']
+    distance: 28, // miles
+    distanceKm: 45, // km - shorter for Forest City
+    estimatedMinutes: 55, // without traffic, with border crossing
+    description: 'Faster route via Tuas Second Link (opened 1998). More direct to Forest City, usually less congested.',
+    checkpoints: SECOND_LINK_CHECKPOINTS
   }
 };
+
+// Calculate Grab fare estimates
+export function calculateFareEstimates(distanceKm: number, estimatedMinutes: number): FareEstimate[] {
+  // Base fare calculations (approximate Grab cross-border rates)
+  const baseFareSGD = 15; // Base cross-border fare
+  const perKmRate = 0.75; // SGD per km
+  const perMinRate = 0.25; // SGD per minute
+  
+  const baseCost = baseFareSGD + (distanceKm * perKmRate) + (estimatedMinutes * perMinRate);
+  
+  return [
+    {
+      service: "GrabCar",
+      minFare: Math.round(baseCost * 0.9),
+      maxFare: Math.round(baseCost * 1.1),
+      currency: "SGD",
+      estimatedMinutes
+    },
+    {
+      service: "GrabCar Plus",
+      minFare: Math.round(baseCost * 1.2),
+      maxFare: Math.round(baseCost * 1.4),
+      currency: "SGD",
+      estimatedMinutes
+    },
+    {
+      service: "GrabCar Premium",
+      minFare: Math.round(baseCost * 1.5),
+      maxFare: Math.round(baseCost * 1.8),
+      currency: "SGD",
+      estimatedMinutes
+    }
+  ];
+}
 
 // Educational facts about the region
 export const EDUCATIONAL_FACTS = [
@@ -99,26 +102,26 @@ export const EDUCATIONAL_FACTS = [
     source: "National Archives"
   },
   {
-    title: "Forest City Development",
-    description: "Forest City is a 30 sq km mixed-use development on 4 reclaimed islands in Johor. Started in 2014, it's designed as a car-free smart city with vertical gardens.",
+    title: "Forest City Marina Hotel",
+    description: "Located in the 30 sq km Forest City development on reclaimed islands. The marina hotel offers waterfront views and is part of a car-free smart city concept with vertical gardens.",
     source: "Country Garden"
   },
   {
-    title: "Historical Construction",
-    description: "The Causeway cost 17 million Straits dollars (~$1.6 billion today) and employed 2,300+ workers. It was considered one of the greatest engineering works in the Far East at the time.",
-    source: "Singapore National Library"
+    title: "Malaysia-Singapore Second Link",
+    description: "The 1.92 km Second Link bridge opened in 1998, providing an alternative to the congested Causeway. It connects Tuas (Singapore) to Tanjung Kupang (Malaysia) and is often faster for reaching southern Johor.",
+    source: "Land Transport Authority"
   },
   {
-    title: "Climate Conditions",
-    description: "Both Singapore and Malaysia share a tropical rainforest climate with temperatures of 27-32°C year-round. Expect high humidity (80-90%) and potential afternoon thunderstorms.",
-    source: "Meteorological data"
+    title: "Cross-Border Travel Tips",
+    description: "Peak hours are weekday mornings (7-9 AM) and evenings (5-8 PM). Weekends and public holidays see heavy traffic. The Second Link is typically less congested than the Causeway.",
+    source: "ICA Singapore"
   }
 ];
 
-// Get route data for Orchard Road Singapore to Forest City, Malaysia
+// Get route data for a specific route type
 export function getRouteData(routeType: 'causeway' | 'secondLink' = 'secondLink'): Route {
   const start: Location = { lat: 1.3041, lng: 103.8315, name: 'Orchard Road, Singapore' };
-  const end: Location = { lat: 1.4259, lng: 103.7641, name: 'Forest City, Malaysia' };
+  const end: Location = { lat: 1.4259, lng: 103.6319, name: 'Forest City Marina Hotel, Malaysia' };
   
   const selectedRoute = ROUTES[routeType];
 
@@ -127,15 +130,25 @@ export function getRouteData(routeType: 'causeway' | 'secondLink' = 'secondLink'
     end,
     distance: selectedRoute.distance,
     distanceKm: selectedRoute.distanceKm,
-    routeType
+    routeType,
+    checkpoints: selectedRoute.checkpoints
   };
 }
 
 // Get both routes for comparison
 export function getRouteComparison() {
   return {
-    causeway: getRouteData('causeway'),
-    secondLink: getRouteData('secondLink'),
-    details: ROUTES
+    causeway: ROUTES.causeway,
+    secondLink: ROUTES.secondLink
   };
+}
+
+// Format travel time
+export function formatTravelTime(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (hours > 0) {
+    return `${hours}h ${mins}min`;
+  }
+  return `${mins} min`;
 }

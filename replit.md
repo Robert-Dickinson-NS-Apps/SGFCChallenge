@@ -1,8 +1,8 @@
-# Ocean Runner - Running Distance Calculator
+# SG to Forest City - Grab Car Route Planner
 
 ## Overview
 
-Ocean Runner is a web application that calculates running times from Orchard Road, Singapore to Forest City, Malaysia. The app provides an interactive visualization of the route with fun facts, distance calculations, and estimated completion times for different running speeds.
+SG to Forest City is a web application that helps users plan Grab car rides from Singapore (Orchard Road) to Forest City Marina Hotel in Malaysia. The app provides route comparisons via the Johor-Singapore Causeway and the Malaysia-Singapore Second Link, showing border checkpoints, estimated travel times, and approximate Grab fare estimates.
 
 ## User Preferences
 
@@ -13,7 +13,7 @@ Preferred communication style: Simple, everyday language.
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript
 - **Build Tool**: Vite with development server integration
-- **Styling**: Tailwind CSS with custom ocean-themed color palette
+- **Styling**: Tailwind CSS with green/Grab-themed color palette
 - **UI Components**: Radix UI primitives with shadcn/ui component library
 - **State Management**: React Query (@tanstack/react-query) for data fetching and caching
 - **Routing**: Wouter for lightweight client-side routing
@@ -22,47 +22,64 @@ Preferred communication style: Simple, everyday language.
 - **Runtime**: Node.js with Express.js server
 - **Language**: TypeScript with ES modules
 - **Database**: PostgreSQL with Drizzle ORM (configured but not actively used)
-- **Session Management**: PostgreSQL sessions with connect-pg-simple
 - **Development**: Full-stack development with Vite middleware integration
 
 ### Data Storage Solutions
 - **Database**: PostgreSQL with Neon serverless driver
 - **ORM**: Drizzle ORM with migrations support
 - **Current Storage**: In-memory storage implementation (MemStorage class)
-- **Schema**: User management schema defined but not actively used
 
 ## Key Components
 
 ### Core Application Components
 1. **Route Calculation Engine** (`client/src/lib/distance-calculator.ts`)
-   - Haversine formula for great circle distance calculation
-   - Running time calculations for different speeds
-   - Unit conversions (miles to kilometers)
+   - Two route options: Causeway (64 km) and Second Link (45 km)
+   - Fare estimates for different Grab car services
+   - Border checkpoint information for both routes
+   - Educational facts about the Singapore-Malaysia border region
 
 2. **Interactive Visualizations**
-   - Route overview with distance and time statistics
-   - Map visualization with animated runner position
-   - Globe view with 3D earth representation
-   - Interesting facts about the Pacific Ocean route
+   - Route overview with distance, time, and fare estimates
+   - Route selector for comparing Causeway vs Second Link
+   - Google Maps embed for detailed driving directions
+   - Custom SVG globe view showing both routes
+   - Checkpoint timeline showing immigration stops
 
 3. **UI Component Library**
    - Complete shadcn/ui implementation
-   - Custom ocean-themed design system
+   - Custom green/Grab-themed design system
    - Responsive design with mobile support
-   - Interactive elements (buttons, cards, tooltips)
+   - Interactive route selection cards
 
-### Shared Schema
+### Shared Schema (`shared/schema.ts`)
 - Location coordinates (latitude, longitude, name)
-- Route data (start, end, distances in miles and kilometers)
-- Speed calculations (name, mph, estimated days and hours)
+- Route data with checkpoints array
+- Checkpoint schema (name, country, type, description)
+- Fare estimate schema (service, minFare, maxFare, currency)
+- Route option schema for comparisons
 
-## Data Flow
+## Routes Included
 
-1. **Static Data**: Route coordinates and calculations are computed client-side
-2. **Component Hierarchy**: 
-   - App → Home page → Individual sections (Header, RouteOverview, MapVisualization, etc.)
-3. **State Management**: React Query for any future API calls, local state for UI interactions
-4. **Styling**: CSS variables for theming, Tailwind classes for layout
+### Via Johor-Singapore Causeway
+- Distance: 64 km (40 miles)
+- Estimated time: ~75 minutes
+- Checkpoints: Woodlands → Sultan Iskandar Building → JB City
+- Notes: Historic route, passes through JB city center
+
+### Via Malaysia-Singapore Second Link
+- Distance: 45 km (28 miles)
+- Estimated time: ~55 minutes
+- Checkpoints: Tuas → Sultan Abu Bakar Complex → Gelang Patah
+- Notes: Faster route, typically less congested
+
+## Educational Content
+
+The app includes real facts about:
+- Johor-Singapore Causeway (built 1924, 1.056 km, 350,000 daily travelers)
+- Johor Strait geography (50 km long, 8-12 m deep)
+- Malaysia-Singapore Second Link (opened 1998)
+- Forest City development and Marina Hotel
+- Cross-border travel tips
 
 ## External Dependencies
 
@@ -71,12 +88,10 @@ Preferred communication style: Simple, everyday language.
 - **drizzle-orm**: Type-safe database operations
 - **@tanstack/react-query**: Data fetching and caching
 - **wouter**: Lightweight routing
-- **date-fns**: Date manipulation utilities
 
 ### UI/UX Libraries
 - **@radix-ui/***: Accessible UI primitives
 - **lucide-react**: Icon library
-- **embla-carousel-react**: Carousel functionality
 - **class-variance-authority**: Utility for creating variant-based components
 
 ## Deployment Strategy
@@ -84,22 +99,21 @@ Preferred communication style: Simple, everyday language.
 ### Build Process
 1. **Frontend**: Vite builds React app to `dist/public`
 2. **Backend**: esbuild bundles server code to `dist/index.js`
-3. **Database**: Drizzle migrations with `db:push` command
 
 ### Environment Configuration
 - **Development**: `NODE_ENV=development` with hot reload
 - **Production**: `NODE_ENV=production` with optimized builds
-- **Database**: `DATABASE_URL` environment variable for PostgreSQL connection
 
 ### Scripts
 - `npm run dev`: Development server with TypeScript compilation
 - `npm run build`: Production build for both client and server
 - `npm run start`: Production server startup
-- `npm run db:push`: Database schema deployment
 
-### Replit Integration
-- Custom vite plugins for Replit environment
-- Development banner integration
-- Cartographer plugin for enhanced development experience
+## Recent Changes
 
-The application is designed as a single-page application with server-side rendering capabilities, though currently operating as a client-side application with a minimal Express backend ready for future API expansion.
+- **January 2026**: Changed from running calculator to Grab car route planner
+- Added two route options (Causeway and Second Link)
+- Added border checkpoint information with immigration details
+- Added Grab fare estimates for different service levels
+- Updated destination to Forest City Marina Hotel
+- Added real educational facts about the Singapore-Malaysia border region

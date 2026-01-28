@@ -7,22 +7,31 @@ export const locationSchema = z.object({
   name: z.string(),
 });
 
+// Checkpoint schema for border crossings
+export const checkpointSchema = z.object({
+  name: z.string(),
+  country: z.enum(['Singapore', 'Malaysia']),
+  type: z.enum(['immigration', 'customs', 'waypoint']),
+  description: z.string().optional(),
+});
+
 // Route data schema
 export const routeSchema = z.object({
   start: locationSchema,
   end: locationSchema,
-  distance: z.number(), // in miles
+  distance: z.number(), // in km
   distanceKm: z.number(), // in kilometers
-  routeType: z.enum(['direct', 'causeway']).optional(),
+  routeType: z.enum(['causeway', 'secondLink']).optional(),
+  checkpoints: z.array(checkpointSchema).optional(),
 });
 
-// Speed calculation schema
-export const speedSchema = z.object({
-  name: z.string(),
-  mph: z.number(),
-  days: z.number(),
-  hours: z.number(),
-  minutes: z.number().optional(),
+// Fare estimate schema
+export const fareEstimateSchema = z.object({
+  service: z.string(),
+  minFare: z.number(),
+  maxFare: z.number(),
+  currency: z.string(),
+  estimatedMinutes: z.number(),
 });
 
 // Educational fact schema
@@ -32,15 +41,19 @@ export const factSchema = z.object({
   source: z.string().optional(),
 });
 
-// Calorie and carbon calculation
-export const healthStatsSchema = z.object({
-  calories: z.number(),
-  carbonSaved: z.number(), // kg of CO2
-  waterBottles: z.number(), // equivalent hydration needed
+// Route comparison
+export const routeOptionSchema = z.object({
+  name: z.string(),
+  distance: z.number(),
+  distanceKm: z.number(),
+  estimatedMinutes: z.number(),
+  checkpoints: z.array(checkpointSchema),
+  description: z.string(),
 });
 
 export type Location = z.infer<typeof locationSchema>;
+export type Checkpoint = z.infer<typeof checkpointSchema>;
 export type Route = z.infer<typeof routeSchema>;
-export type Speed = z.infer<typeof speedSchema>;
+export type FareEstimate = z.infer<typeof fareEstimateSchema>;
 export type Fact = z.infer<typeof factSchema>;
-export type HealthStats = z.infer<typeof healthStatsSchema>;
+export type RouteOption = z.infer<typeof routeOptionSchema>;

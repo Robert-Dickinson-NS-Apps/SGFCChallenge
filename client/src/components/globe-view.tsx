@@ -1,25 +1,29 @@
 import { Card, CardContent } from "@/components/ui/card";
 
-export function GlobeView() {
-  const globeFacts = [
+interface GlobeViewProps {
+  selectedRoute: 'causeway' | 'secondLink';
+}
+
+export function GlobeView({ selectedRoute }: GlobeViewProps) {
+  const routeFacts = [
     {
-      title: "Short Distance Route",
-      description: "The direct distance between Singapore and Forest City is much shorter than cross-ocean routes"
+      title: "Cross-Border Journey",
+      description: "Travel between two neighboring countries with distinct cultures and currencies"
     },
     {
       title: "Strait Crossing",
-      description: "The route crosses the Johor Strait, which separates Singapore from mainland Malaysia"
+      description: "The route crosses the Johor Strait via either the historic Causeway or the modern Second Link"
     },
     {
-      title: "Calorie Burn",
-      description: "This run would burn approximately 500-1000 calories depending on your pace!"
+      title: "Time Savings",
+      description: "The Second Link route is typically faster with less traffic congestion than the Causeway"
     }
   ];
 
   return (
-    <Card className="border-ocean-200">
+    <Card className="border-gray-200 mb-8">
       <CardContent className="p-8">
-        <h3 className="text-2xl font-bold text-ocean-800 mb-6 text-center">Regional Map View</h3>
+        <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Regional Map View</h3>
         
         <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
           <div className="relative">
@@ -51,27 +55,52 @@ export function GlobeView() {
                   opacity="0.7"
                 />
                 
+                {/* Causeway */}
+                <line x1="210" y1="295" x2="215" y2="280" stroke="#6b7280" strokeWidth="4" />
+                <text x="230" y="290" fill="#374151" fontSize="8">Causeway</text>
+                
+                {/* Second Link */}
+                <line x1="178" y1="315" x2="160" y2="290" stroke="#6b7280" strokeWidth="3" />
+                <text x="140" y="305" fill="#374151" fontSize="8">2nd Link</text>
+                
                 {/* Forest City location */}
-                <circle cx="240" cy="270" r="8" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
+                <circle cx="240" cy="270" r="8" fill="#22c55e" stroke="#ffffff" strokeWidth="2" />
                 <text x="240" y="255" textAnchor="middle" fill="#1f2937" fontSize="12" fontWeight="bold">Forest City</text>
                 
-                {/* Singapore location */}
-                <circle cx="200" cy="315" r="8" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
-                <text x="200" y="340" textAnchor="middle" fill="#1f2937" fontSize="12" fontWeight="bold">Singapore</text>
+                {/* Singapore - Orchard Road */}
+                <circle cx="200" cy="315" r="8" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
+                <text x="200" y="355" textAnchor="middle" fill="#1f2937" fontSize="11" fontWeight="bold">Orchard Road</text>
                 
-                {/* Route line */}
+                {/* Route lines - highlight selected route */}
                 <path 
-                  d="M200 315 Q220 290 240 270" 
-                  stroke="#dc2626" 
-                  strokeWidth="3" 
+                  d="M200 315 Q210 295 215 280 Q225 270 240 270" 
+                  stroke={selectedRoute === 'causeway' ? "#f59e0b" : "#9ca3af"}
+                  strokeWidth={selectedRoute === 'causeway' ? 3 : 2}
                   fill="none" 
                   strokeDasharray="5,3"
-                  className="animate-pulse"
+                  className={selectedRoute === 'causeway' ? "animate-pulse" : ""}
+                />
+                <path 
+                  d="M200 315 Q178 315 160 290 Q180 275 240 270" 
+                  stroke={selectedRoute === 'secondLink' ? "#22c55e" : "#9ca3af"}
+                  strokeWidth={selectedRoute === 'secondLink' ? 3 : 2}
+                  fill="none" 
+                  strokeDasharray="5,3"
+                  className={selectedRoute === 'secondLink' ? "animate-pulse" : ""}
                 />
                 
                 {/* Country labels */}
                 <text x="220" y="200" textAnchor="middle" fill="#1f2937" fontSize="14" fontWeight="bold">MALAYSIA</text>
-                <text x="200" y="300" textAnchor="middle" fill="#1f2937" fontSize="12" fontWeight="bold">SINGAPORE</text>
+                <text x="200" y="340" textAnchor="middle" fill="#1f2937" fontSize="12" fontWeight="bold">SINGAPORE</text>
+                
+                {/* Legend */}
+                <g transform="translate(20, 20)">
+                  <rect x="0" y="0" width="100" height="45" fill="white" opacity="0.9" rx="4" />
+                  <line x1="10" y1="15" x2="30" y2="15" stroke={selectedRoute === 'causeway' ? "#f59e0b" : "#9ca3af"} strokeWidth="2" strokeDasharray="3,2" />
+                  <text x="35" y="18" fill="#374151" fontSize="9">Causeway</text>
+                  <line x1="10" y1="30" x2="30" y2="30" stroke={selectedRoute === 'secondLink' ? "#22c55e" : "#9ca3af"} strokeWidth="2" strokeDasharray="3,2" />
+                  <text x="35" y="33" fill="#374151" fontSize="9">Second Link</text>
+                </g>
                 
                 {/* Compass */}
                 <g transform="translate(340, 60)">
@@ -84,7 +113,7 @@ export function GlobeView() {
                 </g>
                 
                 {/* Scale indicator */}
-                <g transform="translate(30, 350)">
+                <g transform="translate(30, 370)">
                   <line x1="0" y1="0" x2="50" y2="0" stroke="#374151" strokeWidth="2" />
                   <line x1="0" y1="-3" x2="0" y2="3" stroke="#374151" strokeWidth="2" />
                   <line x1="50" y1="-3" x2="50" y2="3" stroke="#374151" strokeWidth="2" />
@@ -95,10 +124,10 @@ export function GlobeView() {
           </div>
           
           <div className="text-center lg:text-left space-y-4">
-            {globeFacts.map((fact, index) => (
-              <div key={index} className="bg-ocean-50 rounded-lg p-4">
-                <h4 className="font-semibold text-ocean-800 mb-2">{fact.title}</h4>
-                <p className="text-ocean-600">{fact.description}</p>
+            {routeFacts.map((fact, index) => (
+              <div key={index} className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                <h4 className="font-semibold text-gray-800 mb-2">{fact.title}</h4>
+                <p className="text-gray-600">{fact.description}</p>
               </div>
             ))}
           </div>

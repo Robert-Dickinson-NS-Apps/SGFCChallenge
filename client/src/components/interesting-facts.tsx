@@ -1,43 +1,28 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Globe, Clock, Thermometer } from "lucide-react";
+import { Building, MapPin, Clock, Info, Route, Plane } from "lucide-react";
+import { EDUCATIONAL_FACTS } from "@/lib/distance-calculator";
 
 export function InterestingFacts() {
-  const facts = [
-    {
-      icon: Globe,
-      title: "Cross-Border Run",
-      description: "Your route connects two neighboring countries, Singapore and Malaysia, across the Johor Strait",
-      color: "bg-ocean-500"
-    },
-    {
-      icon: Clock,
-      title: "Same Time Zone",
-      description: "Both Singapore and Malaysia are in the same time zone (UTC+8), making timing simple",
-      color: "bg-green-500"
-    },
-    {
-      icon: Thermometer,
-      title: "Tropical Climate",
-      description: "Expect warm temperatures around 27-32°C year-round in this equatorial region",
-      color: "bg-blue-500"
-    }
-  ];
+  const icons = [Building, Route, MapPin, Info, Plane, Clock];
 
   return (
-    <Card className="border-ocean-200 mb-8">
+    <Card className="border-gray-200 mb-8">
       <CardContent className="p-8">
-        <h3 className="text-2xl font-bold text-ocean-800 mb-6 text-center">Route Geography Facts</h3>
+        <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">About This Route</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {facts.map((fact, index) => {
-            const IconComponent = fact.icon;
+          {EDUCATIONAL_FACTS.map((fact, index) => {
+            const IconComponent = icons[index % icons.length];
             return (
-              <div key={index} className="text-center p-4 bg-ocean-50 rounded-lg">
-                <div className={`${fact.color} w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3`}>
-                  <IconComponent className="text-white w-6 h-6" />
+              <div key={index} className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+                <div className="bg-green-500 w-10 h-10 rounded-full flex items-center justify-center mb-3">
+                  <IconComponent className="text-white w-5 h-5" />
                 </div>
-                <h4 className="font-semibold text-ocean-800 mb-2">{fact.title}</h4>
-                <p className="text-ocean-600 text-sm">{fact.description}</p>
+                <h4 className="font-semibold text-gray-800 mb-2">{fact.title}</h4>
+                <p className="text-gray-600 text-sm mb-2">{fact.description}</p>
+                {fact.source && (
+                  <p className="text-xs text-gray-400">Source: {fact.source}</p>
+                )}
               </div>
             );
           })}
